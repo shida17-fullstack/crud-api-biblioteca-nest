@@ -1,50 +1,90 @@
-import { Controller, Post, Body, Get, Param, Delete, ParseIntPipe, Put, NotFoundException } from '@nestjs/common';
-import { Reserva } from './reserva.entity';
-import { ReservasService } from './reservas.service';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  Delete,
+  ParseIntPipe,
+  Put,
+  NotFoundException,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
+import { Reserva } from '@reservas/reserva.entity'; // Ruta Absoluta
+import { ReservasService } from '@reservas/reservas.service'; // Ruta Absoluta
+import { CreateReservaDto, UpdateReservaDto } from '@reservas/dto/reserva.dto'; // Ruta Absoluta
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from '@auth/jwt-auth.guard'; // Ruta Absoluta
+import { JwtPayload } from '@auth/jwt-payload.interface'; // Importa JwtPayload 
 
-/**
- * Controlador para la gestión de reservas.
- * Define las rutas HTTP y maneja las peticiones para operaciones CRUD de reservas.
- */
+@ApiTags('reservas')
 @Controller('reservas')
 export class ReservasController {
   constructor(private readonly reservasService: ReservasService) {}
 
-   /**
-   * Endpoint para crear una nueva reserva.
-   * 
-   * @param {Reserva} reserva - Los datos de la nueva reserva.
-   * @returns {Promise<{ message: string; reserva: Reserva }>} - Un objeto que contiene un mensaje de éxito y la reserva creada.
-   */
   @Post()
-  async create(@Body() reserva: Reserva): Promise<{ message: string; reserva: Reserva }> {
-    return this.reservasService.create(reserva);
+@UseGuards(JwtAuthGuard) // Aplica el guardia de autenticación
+@ApiOperation({ summary: 'Crear una nueva reserva' })
+@ApiResponse({ status: 201, description: 'Reserva creada exitosamente.' })
+@ApiResponse({ status: 404, description: 'Libro o usuario no encontrado.' })
+@ApiResponse({ status: 409, description: 'Conflicto con la reserva.' })
+@ApiResponse({ status: 403, description: 'Permiso denegado.' })
+async create(
+  @Body() createReservaDto: CreateReservaDto,
+  @Req() req: any, // Accede a la solicitud para obtener el usuario autenticado
+): Promise<{ message: string; reserva: Reserva }> {
+  const usuarioAutenticado: JwtPayload = {
+    sub: req.user.usuarioId, // Asegúrate de que esto sea correcto
+    nombreUsuario: req.user.nombreUsuario,
+  };
+
+  return this.reservasService.create(createReservaDto, usuarioAutenticado);
+}
+
+
+ /**
+ * Obtiene todas las reservas.
+ * 
+ * @returns {Promise<{ message: string; reservas: any[]; total: number }>} 
+ * Un objeto con un mensaje, la lista de reservas (con mensajes si faltan datos) y el total de reservas.
+ * @throws {NotFoundException} - Si ocurre un error al recuperar las reservas.
+ */
+@Get()
+@ApiOperation({ summary: 'Obtiene todas las reservas.' })
+@ApiResponse({ status: 200, description: 'Reservas obtenidas exitosamente.' })
+@ApiResponse({ status: 404, description: 'Error al obtener las reservas.' })
+async findAll(): Promise<{
+  message: string;
+  reservas: any[];  // Lista de reservas con mensajes si usuario o libro están ausentes.
+  total: number;
+}> {
+  try {
+    const result = await this.reservasService.findAll();
+    return result;
+  } catch (error) {
+    throw new NotFoundException(
+      `Error al obtener todas las reservas. Detalles: ${error.message}`,
+    );
   }
+}
+
+
 
   /**
-   * Obtiene todas las reservas.
-   * @returns {Promise<{ message: string, reservas: Reserva[], total: number }>} - Objeto que contiene un mensaje de éxito, la lista de todas las reservas y el total de registros.
-   * @throws {NotFoundException} - Si ocurre un problema durante la obtención de las reservas.
-   */
-  @Get()
-  async findAll(): Promise<{ message: string, reservas: Reserva[], total: number }> {
-    try {
-      const result = await this.reservasService.findAll();
-      return result;
-    } catch (error) {
-      throw new NotFoundException(`Error al obtener todas las reservas. Detalles: ${error.message}`);
-    }
-  }
-
-  /**
-   * Obtiene una reserva específica por su ID.
+   * Obtiene una reserva por su ID.
    * 
-   * @param {number} id - El ID de la reserva a buscar.
-   * @returns {Promise<{ message: string, reserva: Reserva }>} - La reserva encontrada.
-   * @throws {NotFoundException} - Si no se encuentra la reserva con el ID proporcionado.
+   * @param {number} id - ID de la reserva.
+   * @returns {Promise<{ message: string; reserva: Reserva }>} - Datos de la reserva.
+   * @throws {NotFoundException} - Si la reserva no se encuentra.
    */
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<{ message: string, reserva: Reserva }> {
+  @ApiOperation({ summary: 'Obtiene una reserva por su ID.' })
+  @ApiResponse({ status: 200, description: 'Reserva recuperada exitosamente.' })
+  @ApiResponse({ status: 404, description: 'Reserva no encontrada.' })
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<{ message: string; reserva: Reserva }> {
     try {
       const result = await this.reservasService.findOne(id);
       if (!result.reserva) {
@@ -52,19 +92,26 @@ export class ReservasController {
       }
       return result;
     } catch (error) {
-      throw new NotFoundException(`Error al obtener la reserva con ID ${id}. Detalles: ${error.message}`);
+      throw new NotFoundException(
+        `Error al obtener la reserva con ID ${id}. Detalles: ${error.message}`,
+      );
     }
   }
 
   /**
-   * Elimina lógicamente una reserva.
+   * Elimina una reserva por su ID.
    * 
-   * @param {number} id - El ID de la reserva a eliminar.
-   * @returns {Promise<{ message: string, reserva: Reserva }>} - La reserva eliminada lógicamente.
-   * @throws {NotFoundException} - Si no se encuentra la reserva con el ID proporcionado.
+   * @param {number} id - ID de la reserva.
+   * @returns {Promise<{ message: string; reserva: Reserva }>} - Mensaje y datos de la reserva eliminada.
+   * @throws {NotFoundException} - Si la reserva no se encuentra.
    */
   @Delete(':id')
-  async delete(@Param('id', ParseIntPipe) id: number): Promise<{ message: string, reserva: Reserva }> {
+  @ApiOperation({ summary: 'Elimina una reserva por su ID.' })
+  @ApiResponse({ status: 200, description: 'Reserva eliminada exitosamente.' })
+  @ApiResponse({ status: 404, description: 'Reserva no encontrada.' })
+  async delete(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<{ message: string; reserva: Reserva }> {
     try {
       const result = await this.reservasService.delete(id);
       if (!result.reserva) {
@@ -72,31 +119,38 @@ export class ReservasController {
       }
       return result;
     } catch (error) {
-      throw new NotFoundException(`Error al eliminar la reserva con ID ${id}. Detalles: ${error.message}`);
+      throw new NotFoundException(
+        `Error al eliminar la reserva con ID ${id}. Detalles: ${error.message}`,
+      );
     }
   }
 
   /**
    * Actualiza una reserva existente.
    * 
-   * @param {number} id - El ID de la reserva a actualizar.
-   * @param {Partial<Reserva>} reserva - Los nuevos datos para actualizar la reserva.
-   * @returns {Promise<{ message: string, reserva: Reserva }>} - La reserva actualizada.
-   * @throws {NotFoundException} - Si no se encuentra la reserva con el ID proporcionado.
+   * @param {number} id - ID de la reserva.
+   * @param {UpdateReservaDto} updateReservaDto - Datos actualizados de la reserva.
+   * @returns {Promise<{ message: string; reserva: Reserva }>} - Mensaje y datos de la reserva actualizada.
+   * @throws {NotFoundException} - Si la reserva no se encuentra.
    */
   @Put(':id')
+  @ApiOperation({ summary: 'Actualiza una reserva existente.' })
+  @ApiResponse({ status: 200, description: 'Reserva actualizada exitosamente.' })
+  @ApiResponse({ status: 404, description: 'Reserva no encontrada.' })
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() reserva: Partial<Reserva>,
-  ): Promise<{ message: string, reserva: Reserva }> {
+    @Body() updateReservaDto: UpdateReservaDto,
+  ): Promise<{ message: string; reserva: Reserva }> {
     try {
-      const result = await this.reservasService.update(id, reserva);
+      const result = await this.reservasService.update(id, updateReservaDto);
       if (!result.reserva) {
         throw new NotFoundException(`Reserva con ID ${id} no encontrada`);
       }
       return result;
     } catch (error) {
-      throw new NotFoundException(`Error al actualizar la reserva con ID ${id}. Detalles: ${error.message}`);
+      throw new NotFoundException(
+        `Error al actualizar la reserva con ID ${id}. Detalles: ${error.message}`,
+      );
     }
   }
 }

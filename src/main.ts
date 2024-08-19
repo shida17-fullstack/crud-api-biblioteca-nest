@@ -1,12 +1,18 @@
 // src/main.ts
+
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './app.module'; // Importa el módulo principal de la aplicación
+import * as dotenv from 'dotenv';
+
+// Carga las variables de entorno desde un archivo .env
+dotenv.config();
 
 /**
  * Función principal para iniciar la aplicación Nest.js.
- * 
- * Esta función configura y arranca la aplicación Nest.js. Establece el prefijo global para todas las rutas
- * y configura el puerto en el que la aplicación escuchará las peticiones entrantes.
+ *
+ * Esta función configura y arranca la aplicación Nest.js, incluyendo la configuración
+ * de Swagger para la documentación de la API.
  */
 async function bootstrap() {
   // Crea una instancia de la aplicación Nest.js utilizando el módulo raíz AppModule
@@ -14,11 +20,25 @@ async function bootstrap() {
 
   // Establece un prefijo global para todas las rutas en la aplicación
   // Esto significa que todas las rutas se verán precedidas por 'api/v1'
-  app.setGlobalPrefix('api/v1'); // Establece el prefijo global
+  app.setGlobalPrefix('api/v1');
+
+  // Configura Swagger para la documentación de la API
+  const config = new DocumentBuilder()
+    .setTitle('Biblioteca API') // Título de la documentación
+    .setDescription('API CRUD para la gestión de una biblioteca') // Descripción de la API
+    .setVersion('1.0') // Versión de la API
+    .addTag('biblioteca') // Etiqueta para agrupar endpoints relacionados
+    .build();
+
+  // Crea el documento Swagger a partir de la configuración
+  const document = SwaggerModule.createDocument(app, config);
+
+  // Configura el endpoint donde estará disponible la documentación Swagger
+  SwaggerModule.setup('api/v1/api-docs', app, document); 
 
   // Configura el puerto en el que la aplicación escuchará las peticiones
-  // En este caso, la aplicación escuchará en el puerto 3000
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
+
 }
 
 // Llama a la función bootstrap para iniciar la aplicación

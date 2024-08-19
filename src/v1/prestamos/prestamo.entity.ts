@@ -1,7 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Usuario } from '../usuarios/usuario.entity';
-import { Libro } from '../libros/libro.entity';
-import { Reserva } from '../reservas/reserva.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+// Use alias configurados en tsconfig.json para rutas absolutas
+import { Usuario } from '@usuarios/usuario.entity'; //Ruta Absoluta
+import { Libro } from '@libros/libro.entity'; //Ruta Absoluta
+import { Reserva } from '@reservas/reserva.entity'; //Ruta Absoluta
 
 /**
  * Entidad que representa un préstamo de libro en la base de datos.
@@ -18,7 +25,7 @@ export class Prestamo {
    * Usuario asociado al préstamo.
    * Relación muchos a uno con la entidad Usuario.
    */
-  @ManyToOne(() => Usuario, usuario => usuario.prestamos)
+  @ManyToOne(() => Usuario, (usuario) => usuario.prestamos)
   @JoinColumn({ name: 'usuarioId' })
   usuario: Usuario;
 
@@ -26,7 +33,7 @@ export class Prestamo {
    * Libro asociado al préstamo.
    * Relación muchos a uno con la entidad Libro.
    */
-  @ManyToOne(() => Libro, libro => libro.prestamos)
+  @ManyToOne(() => Libro, (libro) => libro.prestamos)
   @JoinColumn({ name: 'libroId' })
   libro: Libro;
 

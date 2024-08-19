@@ -1,119 +1,93 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Reserva } from '../reservas/reserva.entity';
-import { Prestamo } from '../prestamos/prestamo.entity';
+import { Reserva } from '@reservas/reserva.entity';
+import { Prestamo } from '@prestamos/prestamo.entity';
+import { Direccion } from '@usuarios/interfaces/direccion.interface';
 
 /**
- * Interfaz que define la estructura de la dirección.
+ * Enum para representar los roles de los usuarios en el sistema.
  */
-interface Direccion {
-  calle: string;
-  numero: string;
-  ciudad: string;
-  provincia: string;
-  pais: string;
+export enum Rol {
+  BIBLIOTECARIO = 'BIBLIOTECARIO', // Personal biblioteca
+  DIRECTOR = 'DIRECTOR', // Personal biblioteca
+  AUXILIAR = 'AUXILIAR', // Personal biblioteca
+  USUARIO = 'USUARIO',
 }
 
-/**
- * Entidad que representa un usuario en la base de datos.
- */
 @Entity()
 export class Usuario {
   /**
    * Identificador único del usuario.
-   * 
-   * @type {number}
    */
   @PrimaryGeneratedColumn()
   id: number;
 
   /**
    * Nombre del usuario.
-   * 
-   * @type {string}
    */
   @Column()
   nombre: string;
 
   /**
-   * Nombre de usuario (username) del usuario.
-   * 
-   * @type {string}
-   * @optional
+   * Nombre de usuario, opcional y único.
    */
   @Column({ unique: true, nullable: true })
   nombreUsuario?: string;
 
   /**
-   * Correo electrónico del usuario.
-   * 
-   * @type {string}
+   * Correo electrónico del usuario, único.
    */
   @Column({ unique: true })
   email: string;
 
   /**
    * Contraseña del usuario.
-   * 
-   * @type {string}
-   * @optional
    */
-  @Column({ nullable: true })
-  password?: string;
+  @Column()
+  password: string;
 
   /**
    * Edad del usuario.
-   * 
-   * @type {number}
    */
   @Column()
   edad: number;
 
   /**
    * Carrera o profesión del usuario.
-   * 
-   * @type {string}
    */
   @Column()
   carreraOProfesion: string;
 
   /**
-   * Dirección del usuario, almacenada como objeto JSON.
-   * 
-   * @type {Direccion}
+   * Dirección del usuario, almacenada como JSON.
    */
   @Column('json')
   direccion: Direccion;
 
   /**
-   * Indica si el usuario ha sido eliminado (soft delete).
-   * 
-   * @type {boolean}
-   * @default false
+   * Indica si el usuario ha sido marcado como eliminado.
    */
   @Column({ default: false })
   isDeleted: boolean;
 
   /**
-   * Rol o roles del usuario (para control de acceso).
-   * 
-   * @type {string[]}
-   * @optional
+   * Rol del usuario en el sistema.
+   * Valores posibles definidos en el enum Rol.
    */
-  @Column('simple-array', { nullable: true })
-  roles?: string[];
+  @Column({
+    type: 'enum',
+    enum: Rol,
+    default: Rol.USUARIO,
+  })
+  rol: Rol;
 
   /**
-   * Lista de reservas asociadas al usuario.
-   * 
-   * @type {Reserva[]}
+   * Reservas asociadas al usuario.
    */
   @OneToMany(() => Reserva, (reserva) => reserva.usuario)
   reservas: Reserva[];
 
   /**
-   * Lista de préstamos asociados al usuario.
-   * 
-   * @type {Prestamo[]}
+   * Préstamos asociados al usuario.
    */
   @OneToMany(() => Prestamo, (prestamo) => prestamo.usuario)
   prestamos: Prestamo[];

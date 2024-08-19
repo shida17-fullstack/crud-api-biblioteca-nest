@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Reserva } from '../reservas/reserva.entity';
-import { Prestamo } from '../prestamos/prestamo.entity';
+// Use alias configurados en tsconfig.json para rutas absolutas
+import { Reserva } from '@reservas/reserva.entity'; //Ruta Absoluta
+import { Prestamo } from '@prestamos/prestamo.entity'; //Ruta Absoluta
 
 /**
  * La entidad Libro representa un libro en la biblioteca.

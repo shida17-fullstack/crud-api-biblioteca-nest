@@ -1,14 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Usuario } from '../usuarios/usuario.entity';
-import { Libro } from '../libros/libro.entity';
-import { Prestamo } from '../prestamos/prestamo.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+// Use alias configurados en tsconfig.json para rutas absolutas
+import { Usuario } from '@usuarios/usuario.entity'; //Ruta Absoluta
+import { Libro } from '@libros/libro.entity'; //Ruta Absoluta
+import { Prestamo } from '@prestamos/prestamo.entity'; //Ruta Absoluta
 
 /**
  * Representa una reserva en la base de datos.
  */
 @Entity()
 export class Reserva {
-
   /**
    * Identificador único de la reserva.
    * Este campo es la clave primaria y se genera automáticamente.
@@ -62,7 +68,7 @@ export class Reserva {
    * Este campo es opcional y puede ser nulo.
    * Vincula una reserva con un préstamo específico cuando la reserva se convierte en un préstamo.
    */
-  @ManyToOne(() => Prestamo, prestamo => prestamo.reserva, { nullable: true })
+  @ManyToOne(() => Prestamo, (prestamo) => prestamo.reserva, { nullable: true })
   @JoinColumn({ name: 'prestamoId' })
   prestamo: Prestamo;
 }

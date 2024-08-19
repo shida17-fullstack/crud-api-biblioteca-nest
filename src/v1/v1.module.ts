@@ -1,18 +1,22 @@
 // src/v1/v1.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LibrosModule } from './libros/libros.module';
-import { PrestamosModule } from './prestamos/prestamos.module';
-import { ReservasModule } from './reservas/reservas.module';
-import { UsuariosModule } from './usuarios/usuarios.module';
-import { Libro } from './libros/libro.entity';
-import { Prestamo } from './prestamos/prestamo.entity';
-import { Reserva } from './reservas/reserva.entity';
-import { Usuario } from './usuarios/usuario.entity';
+// Use alias configurados en tsconfig.json para rutas absolutas
+import { LibrosModule } from '@libros/libros.module'; //Ruta Absoluta
+import { PrestamosModule } from '@prestamos/prestamos.module'; //Ruta Absoluta
+import { ReservasModule } from '@reservas/reservas.module'; //Ruta Absoluta
+import { UsuariosModule } from '@usuarios/usuarios.module'; //Ruta Absoluta
+import { Libro } from '@libros/libro.entity'; //Ruta Absoluta
+import { Prestamo } from '@prestamos/prestamo.entity'; //Ruta Absoluta
+import { Reserva } from '@reservas/reserva.entity'; //Ruta Absoluta
+import { Usuario } from '@usuarios/usuario.entity'; //Ruta Absoluta
+import { RolesService } from './roles/roles.service';
+import { RolesController } from './roles/roles.controller';
+import { RolesModule } from './roles/roles.module';
 
 /**
  * Módulo principal para la versión 1 de la API.
- * 
+ *
  * Este módulo agrupa e importa los diferentes módulos de la aplicación relacionados con
  * la gestión de libros, préstamos, reservas y usuarios, así como las entidades
  * correspondientes utilizadas por TypeORM para la interacción con la base de datos.
@@ -48,6 +52,10 @@ import { Usuario } from './usuarios/usuario.entity';
      * Contiene las funcionalidades y controladores relacionados con la gestión de usuarios en la aplicación.
      */
     UsuariosModule,
+
+    RolesModule,
   ],
+  providers: [RolesService],
+  controllers: [RolesController],
 })
 export class V1Module {}

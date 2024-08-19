@@ -1,38 +1,20 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsuariosService } from './usuarios.service';
-import { UsuariosController } from './usuarios.controller';
-import { Usuario } from './usuario.entity';
+import { UsuariosService } from '@usuarios/usuarios.service';
+import { UsuariosController } from '@usuarios/usuarios.controller';
+import { Usuario } from '@usuarios/usuario.entity';
+import { AuthModule } from '@auth/auth.module';
 
 /**
- * Módulo de Usuarios.
- * 
- * Este módulo encapsula la lógica relacionada con la entidad `Usuario`, incluyendo la definición del servicio y el controlador, y la integración con TypeORM.
+ * Módulo de Usuarios que encapsula todos los componentes relacionados con la entidad Usuario.
  */
 @Module({
   imports: [
-    /**
-     * Importa el módulo TypeOrmModule y configura la entidad `Usuario`.
-     * 
-     * El método `forFeature` registra la entidad `Usuario` para su uso dentro de este módulo, permitiendo que el repositorio de la entidad sea inyectado en el servicio `UsuariosService`.
-     */
-    TypeOrmModule.forFeature([Usuario])
+    TypeOrmModule.forFeature([Usuario]),
+    forwardRef(() => AuthModule), // Usa forwardRef para evitar dependencia circular
   ],
-  providers: [
-    /**
-     * Proveedor del servicio `UsuariosService`.
-     * 
-     * El servicio `UsuariosService` contiene la lógica de negocio relacionada con la entidad `Usuario`.
-     */
-    UsuariosService
-  ],
-  controllers: [
-    /**
-     * Controlador de `UsuariosController`.
-     * 
-     * El controlador `UsuariosController` maneja las solicitudes HTTP entrantes relacionadas con la entidad `Usuario`.
-     */
-    UsuariosController
-  ],
+  providers: [UsuariosService],
+  controllers: [UsuariosController],
+  exports: [UsuariosService, TypeOrmModule], // Exporta UsuariosService y TypeOrmModule
 })
 export class UsuariosModule {}

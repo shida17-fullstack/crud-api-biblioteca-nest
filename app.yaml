@@ -1,0 +1,13 @@
+runtime: nodejs18
+env: standard
+entrypoint: npm run start:prod
+
+env_variables:
+  NODE_ENV: 'production'
+  DATABASE_URL: 'mysql://root:shida17@/biblioteca?socketPath=/cloudsql/nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'
+
+
+beta_settings:
+  cloud_sql_instances: nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia
+
+
