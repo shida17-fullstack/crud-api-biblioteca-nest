@@ -15,6 +15,11 @@ dotenv.config();
  * de Swagger para la documentación de la API.
  */
 async function bootstrap() {
+  // Imprime el valor de NODE_ENV para verificar su configuración
+  console.log('NODE_ENV:', process.env.NODE_ENV);
+  console.log('Environment Variables:', process.env);
+
+
   // Crea una instancia de la aplicación Nest.js utilizando el módulo raíz AppModule
   const app = await NestFactory.create(AppModule);
 
@@ -38,7 +43,6 @@ async function bootstrap() {
 
   // Configura el puerto en el que la aplicación escuchará las peticiones
   await app.listen(process.env.PORT || 3000);
-
 }
 
 // Llama a la función bootstrap para iniciar la aplicación

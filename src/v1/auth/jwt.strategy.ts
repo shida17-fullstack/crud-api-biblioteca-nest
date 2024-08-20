@@ -1,5 +1,3 @@
-// src/v1/auth/jwt.strategy.ts
-
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -8,9 +6,16 @@ import { JwtPayload } from '@auth/jwt-payload.interface'; // Define esta interfa
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
+    // Determina el entorno y usa la clave secreta adecuada
+    const isProduction = process.env.NODE_ENV === 'production';
+    const secretOrKey = isProduction ? process.env.PROD_JWT_SECRET_KEY : process.env.JWT_SECRET_KEY;
+
+    // Imprime el valor de la clave secreta para depuración
+    console.log('JWT_SECRET_KEY:', secretOrKey);
+
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.JWT_SECRET_KEY, // Utiliza la variable de entorno para la clave secreta
+      secretOrKey: secretOrKey,
     });
   }
 
