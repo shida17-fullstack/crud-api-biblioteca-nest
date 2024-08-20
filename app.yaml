@@ -5,6 +5,8 @@ entrypoint: npm run start:prod
 env_variables:
   NODE_ENV: 'production'
   DATABASE_URL: 'mysql://root:shida17@/biblioteca?socketPath=/cloudsql/nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'
+  JWT_SECRET_KEY: 'shida17'
+
 
 
 beta_settings:
