@@ -12,23 +12,20 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
  */
 @Module({
   imports: [
-    // Configura ConfigModule para que cargue las variables de entorno
     ConfigModule.forRoot({
-      isGlobal: true, // Hace que ConfigModule esté disponible en toda la aplicación sin necesidad de importarlo nuevamente
+      isGlobal: true,
     }),
-    
-    // Configura el módulo de TypeORM para la conexión a la base de datos usando ConfigService
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         type: 'mysql',
-        url: configService.get<string>('DATABASE_URL'), // Usa la variable de entorno DATABASE_URL
+        url: configService.get<string>('DATABASE_URL'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: configService.get<string>('NODE_ENV') === 'development', // Solo sincronizar en desarrollo
+        // Sincronización automática solo en entorno de desarrollo
+        synchronize: configService.get<string>('NODE_ENV') === 'development' ? true : false,
       }),
       inject: [ConfigService],
     }),
-
     /**
      * Importa el módulo principal de la versión 1 de la API.
      *
