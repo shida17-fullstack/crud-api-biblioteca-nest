@@ -2,17 +2,18 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // Use alias configurados en tsconfig.json para rutas absolutas
-import { LibrosModule } from '@libros/libros.module'; //Ruta Absoluta
-import { PrestamosModule } from '@prestamos/prestamos.module'; //Ruta Absoluta
-import { ReservasModule } from '@reservas/reservas.module'; //Ruta Absoluta
-import { UsuariosModule } from '@usuarios/usuarios.module'; //Ruta Absoluta
-import { Libro } from '@libros/libro.entity'; //Ruta Absoluta
-import { Prestamo } from '@prestamos/prestamo.entity'; //Ruta Absoluta
-import { Reserva } from '@reservas/reserva.entity'; //Ruta Absoluta
-import { Usuario } from '@usuarios/usuario.entity'; //Ruta Absoluta
-import { RolesService } from './roles/roles.service';
-import { RolesController } from './roles/roles.controller';
-import { RolesModule } from './roles/roles.module';
+import { LibrosModule } from '@libros/libros.module'; // Ruta Absoluta
+import { PrestamosModule } from '@prestamos/prestamos.module'; // Ruta Absoluta
+import { ReservasModule } from '@reservas/reservas.module'; // Ruta Absoluta
+import { UsuariosModule } from '@usuarios/usuarios.module'; // Ruta Absoluta
+import { Libro } from '@libros/libro.entity'; // Ruta Absoluta
+import { Prestamo } from '@prestamos/prestamo.entity'; // Ruta Absoluta
+import { Reserva } from '@reservas/reserva.entity'; // Ruta Absoluta
+import { Usuario } from '@usuarios/usuario.entity'; // Ruta Absoluta
+import { RolesService } from '@roles/roles.service';
+import { RolesController } from '@roles/roles.controller';
+import { RolesModule } from '@roles/roles.module';
+import { HealthModule } from '@health/health.module';
 
 /**
  * Módulo principal para la versión 1 de la API.
@@ -53,7 +54,15 @@ import { RolesModule } from './roles/roles.module';
      */
     UsuariosModule,
 
+    /**
+     * Importa el módulo para la gestión de roles.
+     */
     RolesModule,
+
+    /**
+     * Importa el módulo para la ruta de salud.
+     */
+    HealthModule,
   ],
   providers: [RolesService],
   controllers: [RolesController],

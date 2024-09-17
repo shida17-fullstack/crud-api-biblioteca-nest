@@ -11,7 +11,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const secretOrKey = isProduction ? process.env.PROD_JWT_SECRET_KEY : process.env.JWT_SECRET_KEY;
 
     // Imprime el valor de la clave secreta para depuración
-    console.log('JWT_SECRET_KEY:', secretOrKey);
+    console.log(`Environment: ${process.env.NODE_ENV}`);
+    console.log(`JWT Secret Key: ${secretOrKey}`);
 
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

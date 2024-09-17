@@ -1,11 +1,46 @@
-runtime: nodejs18
-env: standard
+runtime: nodejs
+env: flex
+
+runtime_config:
+  operating_system: "ubuntu22"
+  runtime_version: "22"
+
+resources:
+  cpu: 2
+  memory_gb: 5
+  disk_size_gb: 10
+
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 10
+
 entrypoint: npm run start:prod
 
 env_variables:
   NODE_ENV: 'production'
-  DATABASE_URL: 'mysql://root:shida17@/biblioteca?socketPath=/cloudsql/nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'
   PROD_JWT_SECRET_KEY: 'shida17_prod'
+  CLOUD_SQL_CONNECTION_NAME: 'nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'
+  DATABASE_PORT: '3306'
+  DATABASE_USER: 'root'
+  DATABASE_PASSWORD: 'shida17'
+  DATABASE_NAME: 'biblioteca'
 
-beta_settings:
-  cloud_sql_instances: nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia
+vpc_access_connector:
+  name: projects/nest-crud-jwt-swagger-gcp/locations/us-central1/connectors/sql-engine
+
+handlers:
+  # Opcional: Handler para el health check si se quiere usar sin prefijo
+  - url: /api/v1/health
+    script: auto
+    secure: always  # Fuerza el uso de HTTPS para el health check
+
+  # Captura todas las rutas con el prefijo global y las dirige a la aplicación
+  - url: /api/v1/.*
+    script: auto
+    secure: always  # Fuerza el uso de HTTPS para todas las rutas con este prefijo
+    
+liveness_check:
+  path: "/api/v1/health"  # Ajusta esto si usas el prefijo para el health check
+  check_interval_sec: 25
+  failure_threshold: 3
+  success_threshold: 2

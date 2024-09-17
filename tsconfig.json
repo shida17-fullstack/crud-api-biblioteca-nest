@@ -8,7 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2021",
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./dist/src",
     "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
@@ -25,11 +25,15 @@
       "@reservas/*": ["v1/reservas/*"],
       "@auth/*": ["v1/auth/*"],
       "@roles/*": ["v1/roles/*"],
+      "@health/*": ["v1/health/*"],  // Alias para health
       "@src/*": ["*"],
-      "@test/*": ["../test/*"]
+      "@test/*": ["../test/*"],
+      "@migrations/*": ["v1/migrations/*"], // Alias para migraciones
+      "@database/*": ["v1/database/*"] 
     },
-    "typeRoots": ["./node_modules/@types", "./"],
+    "typeRoots": ["./node_modules/@types", "./@types"],
     "types": ["node", "jest", "express"]
   },
-  "include": ["src/**/*", "test/**/*", "express.d.ts"]
+  "include": ["src/**/*", "test/**/*"],
+  "files": ["./@types/express.d.ts"]
 }

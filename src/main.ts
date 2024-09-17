@@ -1,9 +1,8 @@
-// src/main.ts
-
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module'; // Importa el módulo principal de la aplicación
 import * as dotenv from 'dotenv';
+
 
 // Carga las variables de entorno desde un archivo .env
 dotenv.config();
@@ -19,12 +18,10 @@ async function bootstrap() {
   console.log('NODE_ENV:', process.env.NODE_ENV);
   console.log('Environment Variables:', process.env);
 
-
   // Crea una instancia de la aplicación Nest.js utilizando el módulo raíz AppModule
   const app = await NestFactory.create(AppModule);
 
   // Establece un prefijo global para todas las rutas en la aplicación
-  // Esto significa que todas las rutas se verán precedidas por 'api/v1'
   app.setGlobalPrefix('api/v1');
 
   // Configura Swagger para la documentación de la API
@@ -42,7 +39,9 @@ async function bootstrap() {
   SwaggerModule.setup('api/v1/api-docs', app, document); 
 
   // Configura el puerto en el que la aplicación escuchará las peticiones
-  await app.listen(process.env.PORT || 3000);
+  const port = process.env.PORT || 8080;  // Cambiar el puerto a 8080 por defecto
+  await app.listen(port);
+  console.log(`Aplicación escuchando en el puerto ${port}`);
 }
 
 // Llama a la función bootstrap para iniciar la aplicación
