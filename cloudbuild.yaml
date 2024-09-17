@@ -32,3 +32,6 @@ steps:
       - 'DATABASE_NAME=biblioteca'
 
 timeout: '1600s'
+
+options:
+  logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para manejar los registros de la compilación
