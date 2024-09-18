@@ -28,6 +28,6 @@ steps:
       - 'DATABASE_PASSWORD=shida17'
       - 'DATABASE_NAME=biblioteca'
 
-timeout: '600s'
+timeout: 1200s  # Tiempo máximo para completar el build (20 minutos)
 options:
   logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para manejar los registros de la compilación
