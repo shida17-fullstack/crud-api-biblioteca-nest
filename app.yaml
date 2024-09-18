@@ -1,9 +1,6 @@
-runtime: nodejs
 env: flex
-
-runtime_config:
-  operating_system: "ubuntu22"
-  runtime_version: "22"
+runtime: custom
+entrypoint: npm run start:prod
 
 resources:
   cpu: 2
@@ -13,8 +10,6 @@ resources:
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 10
-
-entrypoint: npm run start:prod
 
 env_variables:
   NODE_ENV: 'production'
@@ -28,20 +23,8 @@ env_variables:
 vpc_access_connector:
   name: projects/nest-crud-jwt-swagger-gcp/locations/us-central1/connectors/sql-engine
 
-handlers:
-  # Opcional: Handler para el health check si se quiere usar sin prefijo
-  - url: /api/v1/health
-    script: auto
-    secure: always  # Fuerza el uso de HTTPS para el health check
-
-  # Captura todas las rutas con el prefijo global y las dirige a la aplicación
-  - url: /api/v1/.*
-    script: auto
-    secure: always  # Fuerza el uso de HTTPS para todas las rutas con este prefijo
-    
 liveness_check:
-  path: "/api/v1/health"  # Ajusta esto si usas el prefijo para el health check
+  path: "/api/v1/health"
   check_interval_sec: 25
   failure_threshold: 3
   success_threshold: 2
-

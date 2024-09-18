@@ -1,27 +1,23 @@
 steps:
-  # Step 1: Construir la imagen Docker usando el Dockerfile
+  # Paso 1: Construir la imagen Docker usando el Dockerfile
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/nest-crud-jwt-swagger-gcp/crud-api-biblioteca-nest:latest', '.']
 
-  # Step 2: Subir la imagen a Google Container Registry (GCR)
+  # Paso 2: Subir la imagen a Google Container Registry (GCR)
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/nest-crud-jwt-swagger-gcp/crud-api-biblioteca-nest:latest']
 
-   # Step 3: Desplegar en App Engine usando el archivo app.yaml
+  # Paso 3: Desplegar la imagen Docker en App Engine
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
       - 'app'
       - 'deploy'
+      - '--image-url=gcr.io/nest-crud-jwt-swagger-gcp/crud-api-biblioteca-nest:latest'
       - '--project=nest-crud-jwt-swagger-gcp'
       - '--quiet'
 
-  # Step 4: Esperar a que la aplicación esté lista
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'bash'
-    args: ['-c', 'sleep 30']
-
-  # Step 5: Ejecutar migraciones en la base de datos Cloud SQL
+  # Paso 4: Ejecutar migraciones en la base de datos Cloud SQL
   - name: 'gcr.io/cloud-builders/npm'
     entrypoint: 'npm'
     args: ['run', 'migrate']
@@ -33,6 +29,3 @@ steps:
       - 'DATABASE_NAME=biblioteca'
 
 timeout: '600s'
-
-options:
-  logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para manejar los registros de la compilación
