@@ -7,18 +7,19 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/nest-crud-jwt-swagger-gcp/crud-api-biblioteca-nest:latest']
 
-  # Step 3: Desplegar la imagen Docker en App Engine
+   # Step 3: Desplegar en App Engine usando el archivo app.yaml
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
-    args: ['app', 'deploy', '--image-url', 'gcr.io/nest-crud-jwt-swagger-gcp/crud-api-biblioteca-nest:latest', '--project', 'nest-crud-jwt-swagger-gcp', '--quiet']
-    env:
-    - 'GAE_ENV=flex'
-    - 'GAE_RUNTIME=nodejs22'
+    args:
+      - 'app'
+      - 'deploy'
+      - '--project=nest-crud-jwt-swagger-gcp'
+      - '--quiet'
 
   # Step 4: Esperar a que la aplicación esté lista
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
-    args: ['-c', 'sleep 60']
+    args: ['-c', 'sleep 30']
 
   # Step 5: Ejecutar migraciones en la base de datos Cloud SQL
   - name: 'gcr.io/cloud-builders/npm'
