@@ -44,3 +44,6 @@ liveness_check:
   check_interval_sec: 25
   failure_threshold: 3
   success_threshold: 2
+
+# Añadir timeout para solicitudes largas
+timeout_sec: 300 
