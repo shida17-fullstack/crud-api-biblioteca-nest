@@ -21,33 +21,30 @@ automatic_scaling:
 env_variables:
   NODE_ENV: 'production'
   PROD_JWT_SECRET_KEY: 'shida17_prod'
-  CLOUD_SQL_CONNECTION_NAME: 'nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'  # Correcto
+  CLOUD_SQL_CONNECTION_NAME: 'nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'
   DATABASE_PORT: '3306'
   DATABASE_USER: 'root'
   DATABASE_PASSWORD: 'shida17'
   DATABASE_NAME: 'biblioteca'
 
-# Verificación de salud
+# Verificación de salud (sin 'path' para liveness y readiness, pero con 'path' para health_check)
 liveness_check:
-  path: "/api/v1/health"
-  check_interval_sec: 30         # Incremento del tiempo entre verificaciones (default es 5s)
-  timeout_sec: 20                # Incremento del tiempo de espera de la verificación (default es 4s)
-  failure_threshold: 5           # Incremento de umbral de fallos (default es 2)
-  success_threshold: 2
-
-# Verificación de disponibilidad (readiness)
-readiness_check:
-  path: "/api/v1/health"
-  check_interval_sec: 30         # Intervalo de verificación de disponibilidad
-  timeout_sec: 20                # Tiempo de espera por cada verificación de disponibilidad
+  check_interval_sec: 30
+  timeout_sec: 20
   failure_threshold: 5
   success_threshold: 2
 
-# Verificación de inicio
+readiness_check:
+  check_interval_sec: 30
+  timeout_sec: 20
+  failure_threshold: 5
+  success_threshold: 2
+
+# Verificación de inicio (con 'path' específico)
 health_check:
-  path: "/api/v1/health"
-  check_interval_sec: 30         # Aumento en el tiempo entre intentos de verificación de inicio
-  timeout_sec: 20                # Tiempo máximo de espera por intento de verificación
-  failure_threshold: 5           # Número de intentos fallidos antes de marcar el despliegue como fallido
-  success_threshold: 2           # Número de verificaciones exitosas antes de marcar como listo
-  initial_delay_sec: 120         # Retraso inicial para esperar más tiempo antes de la primera verificación
+  path: "/api/v1/health"        # Ruta de verificación de salud
+  check_interval_sec: 30
+  timeout_sec: 20
+  failure_threshold: 5
+  success_threshold: 2
+  initial_delay_sec: 120         # Retraso inicial antes de la primera verificación
