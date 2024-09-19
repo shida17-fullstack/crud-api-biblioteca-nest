@@ -8,11 +8,9 @@ resources:
   memory_gb: 5
   disk_size_gb: 10
 
-# Conexión a la red VPC mediante Serverless VPC Access Connector
+# Conexión a la red VPC (sin vpc_access_connector, ya que no es compatible con flex)
 network:
-  name: default  
-  vpc_access_connector:
-    name: projects/nest-crud-jwt-swagger-gcp/locations/us-central1/connectors/sql-engine-connector  # ID del proyecto añadido
+  name: default  # Asegúrate de que sea la red correcta
 
 # Configuración de escalado automático
 automatic_scaling:
