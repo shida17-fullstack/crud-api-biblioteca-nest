@@ -20,8 +20,7 @@ env_variables:
   DATABASE_PASSWORD: 'shida17'
   DATABASE_NAME: 'biblioteca'
 
-# Conector de Cloud SQL para conexiones serverless
-cloud_sql_instances: 'nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'
+
 
 liveness_check:
   path: "/api/v1/health"
