@@ -14,14 +14,14 @@ automatic_scaling:
 env_variables:
   NODE_ENV: 'production'
   PROD_JWT_SECRET_KEY: 'shida17_prod'
-  CLOUD_SQL_CONNECTION_NAME: 'nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'
+  CLOUD_SQL_CONNECTION_NAME: 'nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'  # Correcto
   DATABASE_PORT: '3306'
   DATABASE_USER: 'root'
   DATABASE_PASSWORD: 'shida17'
   DATABASE_NAME: 'biblioteca'
 
-vpc_access_connector:
-  name: projects/nest-crud-jwt-swagger-gcp/locations/us-central1/connectors/sql-engine
+# Conector de Cloud SQL para conexiones serverless
+cloud_sql_instances: 'nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'
 
 liveness_check:
   path: "/api/v1/health"
