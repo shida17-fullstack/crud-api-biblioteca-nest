@@ -21,7 +21,7 @@ automatic_scaling:
 env_variables:
   NODE_ENV: 'production'
   PROD_JWT_SECRET_KEY: 'shida17_prod'
-  CLOUD_SQL_CONNECTION_NAME: 'nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'  # Correcto
+  DATABASE_HOST: '10.0.0.3'  # IP privada de tu instancia de Cloud SQL
   DATABASE_PORT: '3306'
   DATABASE_USER: 'root'
   DATABASE_PASSWORD: 'shida17'
