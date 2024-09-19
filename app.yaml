@@ -2,15 +2,24 @@ env: flex
 runtime: custom
 entrypoint: npm run start:prod
 
+# Recursos asignados
 resources:
   cpu: 2
   memory_gb: 5
   disk_size_gb: 10
 
+# Conexión a la red VPC mediante Serverless VPC Access Connector
+network:
+  name: default  
+  vpc_access_connector:
+    name: projects/nest-crud-jwt-swagger-gcp/locations/us-central1/connectors/sql-engine-connector  # ID del proyecto añadido
+
+# Configuración de escalado automático
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 10
 
+# Variables de entorno
 env_variables:
   NODE_ENV: 'production'
   PROD_JWT_SECRET_KEY: 'shida17_prod'
@@ -20,8 +29,7 @@ env_variables:
   DATABASE_PASSWORD: 'shida17'
   DATABASE_NAME: 'biblioteca'
 
-
-
+# Verificación de salud
 liveness_check:
   path: "/api/v1/health"
   check_interval_sec: 25
