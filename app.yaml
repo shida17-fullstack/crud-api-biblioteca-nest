@@ -21,30 +21,15 @@ automatic_scaling:
 env_variables:
   NODE_ENV: 'production'
   PROD_JWT_SECRET_KEY: 'shida17_prod'
-  CLOUD_SQL_CONNECTION_NAME: 'nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'
+  CLOUD_SQL_CONNECTION_NAME: 'nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'  # Correcto
   DATABASE_PORT: '3306'
   DATABASE_USER: 'root'
   DATABASE_PASSWORD: 'shida17'
   DATABASE_NAME: 'biblioteca'
 
-# Verificación de salud (sin 'path' para liveness y readiness, pero con 'path' para health_check)
+# Verificación de salud
 liveness_check:
-  check_interval_sec: 30
-  timeout_sec: 20
-  failure_threshold: 5
+  path: "/api/v1/health"
+  check_interval_sec: 25
+  failure_threshold: 3
   success_threshold: 2
-
-readiness_check:
-  check_interval_sec: 30
-  timeout_sec: 20
-  failure_threshold: 5
-  success_threshold: 2
-
-# Verificación de inicio (con 'path' específico)
-health_check:
-  path: "/api/v1/health"        # Ruta de verificación de salud
-  check_interval_sec: 30
-  timeout_sec: 20
-  failure_threshold: 5
-  success_threshold: 2
-  initial_delay_sec: 120         # Retraso inicial antes de la primera verificación

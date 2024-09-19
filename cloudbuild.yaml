@@ -17,17 +17,5 @@ steps:
       - '--project=nest-crud-jwt-swagger-gcp'
       - '--quiet'
 
-  # Paso 4: Ejecutar migraciones en la base de datos Cloud SQL
-  - name: 'gcr.io/cloud-builders/npm'
-    entrypoint: 'npm'
-    args: ['run', 'migrate']
-    env:
-      - 'CLOUD_SQL_CONNECTION_NAME=nest-crud-jwt-swagger-gcp:us-central1:biblioteca-instancia'
-      - 'DATABASE_PORT=3306'
-      - 'DATABASE_USER=root'
-      - 'DATABASE_PASSWORD=shida17'
-      - 'DATABASE_NAME=biblioteca'
-
-   
 options:
   logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para manejar los registros de la compilación
