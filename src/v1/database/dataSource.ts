@@ -22,9 +22,10 @@ const dataSource = new DataSource({
   ],
   synchronize: !isProduction, // Sincronizar solo en desarrollo
   migrationsRun: false, // No ejecutar migraciones automáticamente
-  migrations: [
-    join(__dirname, '/../../migrations/*{.ts,.js}'), // Ruta a las migraciones en src/v1/migrations
-  ],
+  migrations: isProduction
+    ? [join(__dirname, '/../../migrations/*{.js}')] // Ruta a las migraciones compiladas en producción
+    : [join(__dirname, '/../../migrations/*{.ts,.js}')] // Ruta a las migraciones en desarrollo
+  ,
   logging: true,
   extra: {
     connectionLimit: 10, // Configura el límite de conexiones en el pool
