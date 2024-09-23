@@ -14,9 +14,8 @@ steps:
       - 'app'
       - 'deploy'
       - '--image-url=gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest'
-      - '--project=crud-api-biblioteca-nest'  
+      - '--project=crud-api-biblioteca-nest'
       - '--quiet'
-      - '--version=$(date +%Y%m%d%H%M%S)'  # Generar una versión basada en la fecha y hora actual
 
 options:
   logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para manejar los registros de la compilación
