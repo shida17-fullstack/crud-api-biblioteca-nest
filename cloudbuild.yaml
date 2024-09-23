@@ -1,11 +1,11 @@
 steps:
   # Paso 1: Construir la imagen Docker usando el Dockerfile
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/nest-crud-jwt-swagger-gcp/crud-api-biblioteca-nest:latest', '.']
+    args: ['build', '-t', 'gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest', '.']
 
   # Paso 2: Subir la imagen a Google Container Registry (GCR)
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/nest-crud-jwt-swagger-gcp/crud-api-biblioteca-nest:latest']
+    args: ['push', 'gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest']
 
   # Paso 3: Desplegar la imagen Docker en App Engine
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -13,9 +13,10 @@ steps:
     args:
       - 'app'
       - 'deploy'
-      - '--image-url=gcr.io/nest-crud-jwt-swagger-gcp/crud-api-biblioteca-nest:latest'
-      - '--project=nest-crud-jwt-swagger-gcp'
+      - '--image-url=gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest'
+      - '--project=crud-api-biblioteca-nest'  
       - '--quiet'
+      - '--version=$(date +%Y%m%d%H%M%S)'  # Generar una versión basada en la fecha y hora actual
 
 options:
   logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para manejar los registros de la compilación

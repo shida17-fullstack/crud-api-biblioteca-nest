@@ -10,7 +10,7 @@ resources:
 
 # Conexión a la red VPC (sin vpc_access_connector, ya que no es compatible con flex)
 network:
-  name: default  # Asegúrate de que sea la red correcta
+  name: default  # Nombre de la red VPC
 
 # Configuración de escalado automático
 automatic_scaling:
@@ -21,7 +21,7 @@ automatic_scaling:
 env_variables:
   NODE_ENV: 'production'
   PROD_JWT_SECRET_KEY: 'shida17_prod'
-  DATABASE_HOST: '10.0.0.3'  # IP privada de tu instancia de Cloud SQL
+  DATABASE_HOST: '10.54.128.2'  # IP privada de tu instancia de Cloud SQL
   DATABASE_PORT: '3306'
   DATABASE_USER: 'root'
   DATABASE_PASSWORD: 'shida17'
