@@ -7,49 +7,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest']
 
-  # Paso 3: Crear regla de firewall de entrada para App Engine
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    args:
-      - 'compute'
-      - 'firewall-rules'
-      - 'create'
-      - 'allow-app-engine-cloudsql'
-      - '--network'
-      - 'default'
-      - '--direction'
-      - 'INGRESS'
-      - '--action'
-      - 'ALLOW'
-      - '--rules'
-      - 'tcp:3306'
-      - '--source-ranges'
-      - '10.128.0.0/9'
-      - '--priority'
-      - '500'
-
-  # Paso 4: Crear regla de firewall de salida para App Engine
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    args:
-      - 'compute'
-      - 'firewall-rules'
-      - 'create'
-      - 'allow-cloudsql-app-engine'
-      - '--network'
-      - 'default'
-      - '--direction'
-      - 'EGRESS'
-      - '--action'
-      - 'ALLOW'
-      - '--rules'
-      - 'tcp:3306'
-      - '--destination-ranges'
-      - '10.54.128.2'
-      - '--priority'
-      - '500'
-
-  # Paso 5: Desplegar la imagen Docker en App Engine
+  # Paso 3: Desplegar la imagen Docker en App Engine
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
