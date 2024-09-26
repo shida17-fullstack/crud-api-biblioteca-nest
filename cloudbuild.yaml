@@ -1,9 +1,9 @@
 steps:
-  # Paso 1: Construir la imagen Docker usando el Dockerfile
+  # Paso 1: Construir la imagen Docker
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest', '.']
 
-  # Paso 2: Subir la imagen a Google Container Registry (GCR)
+  # Paso 2: Subir la imagen a Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest']
 
@@ -18,4 +18,5 @@ steps:
       - '--quiet'
 
 options:
-  logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para manejar los registros de la compilación
+  logging: ALL  # Usa Cloud Logging y stdout para más visibilidad
+timeout: '1200s'  # Aumenta el tiempo de espera a 20 minutos si es necesario
