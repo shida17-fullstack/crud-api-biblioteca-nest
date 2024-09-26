@@ -18,5 +18,5 @@ steps:
       - '--quiet'
 
 options:
-  logging: ALL  # Usa Cloud Logging y stdout para más visibilidad
+  logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para los registros
 timeout: '1200s'  # Aumenta el tiempo de espera a 20 minutos si es necesario
