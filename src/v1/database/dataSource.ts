@@ -10,7 +10,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const dataSource = new DataSource({
   type: 'mysql',
-  host: configService.get<string>('DATABASE_HOST') || '10.54.128.2',  // IP privada
+  host: configService.get<string>('DATABASE_HOST') || '127.0.0.1',  
   port: parseInt(configService.get<string>('DATABASE_PORT'), 10) || 3306,
   username: configService.get<string>('DATABASE_USER') || 'root',
   password: configService.get<string>('DATABASE_PASSWORD') || 'shida17',
