@@ -21,7 +21,7 @@ automatic_scaling:
 env_variables:
   NODE_ENV: 'production'
   PROD_JWT_SECRET_KEY: 'shida17_prod'
-  DATABASE_HOST: '127.0.0.1'  #
+  DATABASE_HOST: '10.54.128.2'  # IP privada de Cloud SQL
   DATABASE_PORT: '3306'
   DATABASE_USER: 'root'
   DATABASE_PASSWORD: 'shida17'
