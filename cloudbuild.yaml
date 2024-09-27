@@ -7,16 +7,16 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest']
 
-  # Paso 3: Desplegar la imagen Docker en App Engine
+  # Paso 3: Desplegar la imagen Docker en App Engine y capturar errores
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
+    entrypoint: 'bash'
     args:
-      - 'app'
-      - 'deploy'
-      - '--image-url=gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest'
-      - '--project=crud-api-biblioteca-nest'
-      - '--quiet'
+      - '-c'
+      - |
+        set -e  # Detiene la ejecución si hay un error
+        echo "Iniciando despliegue en App Engine..."
+        gcloud app deploy --image-url=gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest --project=crud-api-biblioteca-nest --quiet --verbosity=debug || { echo "Error durante el despliegue."; exit 1; }
+        echo "Despliegue completado exitosamente."  # Mensaje de éxito
 
 options:
   logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para los registros
-
