@@ -17,7 +17,7 @@ automatic_scaling:
   min_num_instances: 1
   max_num_instances: 10
 
-# Variables de entorno para Cloud SQL Auth Proxy y conexión por IP privada
+# Variables de entorno para conexión por IP privada
 env_variables:
   NODE_ENV: 'production'
   PROD_JWT_SECRET_KEY: 'shida17_prod'
@@ -26,10 +26,6 @@ env_variables:
   DATABASE_USER: 'root'
   DATABASE_PASSWORD: 'shida17'
   DATABASE_NAME: 'biblioteca'
-  INSTANCE_CONNECTION_NAME: 'crud-api-biblioteca-nest:us-central1:biblioteca-instancia'  # Nombre de la conexión Cloud SQL
-
-beta_settings:
-  cloud_sql_instances: 'crud-api-biblioteca-nest:us-central1:biblioteca-instancia'  # Nombre de la instancia de Cloud SQL (el mismo que en las variables de entorno)
 
 # Verificación de salud
 liveness_check:

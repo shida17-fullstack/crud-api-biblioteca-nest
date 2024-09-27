@@ -7,14 +7,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest']
 
-  # Paso 3: Conectar a Cloud SQL usando el proxy
-  - name: 'gcr.io/cloudsql-docker/gce-proxy:1.19.1'
-    entrypoint: /cloud_sql_proxy
-    args:
-      - '-instances=crud-api-biblioteca-nest:us-central1:biblioteca-instancia=tcp:3306'  # Nombre de la instancia en Cloud SQL
-    waitFor: ['-']
-
-  # Paso 4: Desplegar la imagen Docker en App Engine
+  # Paso 3: Desplegar la imagen Docker en App Engine
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
@@ -26,3 +19,4 @@ steps:
 
 options:
   logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para los registros
+
