@@ -22,16 +22,16 @@ steps:
     ]
     id: 'Deploy to Cloud Run'
 
-# Manejo de errores global
-- name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      if [ $? -ne 0 ]; then
-        echo "Error en el paso: ${BUILD_STEP_ID}";
-        exit 1;
-      fi
+  # Manejo de errores global
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [ $? -ne 0 ]; then
+          echo "Error en el paso: ${BUILD_STEP_ID}";
+          exit 1;
+        fi
 
 options:
   logging: CLOUD_LOGGING_ONLY
