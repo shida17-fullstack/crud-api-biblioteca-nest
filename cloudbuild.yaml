@@ -3,7 +3,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/biblioteca-nest/biblioteca-nest', '.']
     id: 'Build Image'
-    waitFor: ['-']  # Esperar a que no haya pasos previos
 
   # Manejo de errores para el paso de construcción
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -20,7 +19,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/biblioteca-nest/biblioteca-nest']
     id: 'Push Image'
-    waitFor: ['Build Image']  # Esperar a que se complete el paso anterior
 
   # Manejo de errores para el paso de push
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -45,7 +43,6 @@ steps:
       '--quiet'
     ]
     id: 'Deploy to Cloud Run'
-    waitFor: ['Push Image']  # Esperar a que se complete el paso anterior
 
   # Manejo de errores para el paso de despliegue
   - name: 'gcr.io/cloud-builders/gcloud'
