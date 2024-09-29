@@ -10,8 +10,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const dataSource = new DataSource({
   type: 'mysql',
-  host: configService.get<string>('DATABASE_HOST') || '10.54.128.2',  // IP privada
-  port: parseInt(configService.get<string>('DATABASE_PORT'), 10) || 3306,
+  // Cambiar a socket en lugar de IP
+  socketPath: `/cloudsql/${configService.get<string>('CLOUD_SQL_CONNECTION_NAME')}`, // Nombre de conexión de la instancia
   username: configService.get<string>('DATABASE_USER') || 'root',
   password: configService.get<string>('DATABASE_PASSWORD') || 'shida17',
   database: configService.get<string>('DATABASE_NAME') || 'biblioteca',

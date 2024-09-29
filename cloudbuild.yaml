@@ -1,22 +1,37 @@
 steps:
-  # Paso 1: Construir la imagen Docker
+  # Paso 1: Construir la imagen
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest', '.']
+    args: ['build', '-t', 'gcr.io/biblioteca-nest/biblioteca-nest', '.']
+    id: 'Build Image'
 
-  # Paso 2: Subir la imagen a Artifact Registry
+  # Paso 2: Subir la imagen a Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest']
+    args: ['push', 'gcr.io/biblioteca-nest/biblioteca-nest']
+    id: 'Push Image'
 
-  # Paso 3: Desplegar la imagen Docker en App Engine y capturar errores
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        set -e  # Detiene la ejecución si hay un error
-        echo "Iniciando despliegue en App Engine..."
-        gcloud app deploy --image-url=gcr.io/crud-api-biblioteca-nest/crud-api-biblioteca-nest:latest --project=crud-api-biblioteca-nest --quiet --verbosity=debug || { echo "Error durante el despliegue."; exit 1; }
-        echo "Despliegue completado exitosamente."  # Mensaje de éxito
+  # Paso 3: Desplegar en Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'run', 'deploy', 'biblioteca-nest',
+      '--image', 'gcr.io/biblioteca-nest/biblioteca-nest',
+      '--platform', 'managed',
+      '--region', 'us-central1',
+      '--allow-unauthenticated',
+      '--set-env-vars', 'NODE_ENV=production,PROD_JWT_SECRET_KEY=shida17_prod,DATABASE_USER=root,DATABASE_PASSWORD=shida17,DATABASE_NAME=biblioteca,CLOUD_SQL_CONNECTION_NAME=biblioteca-nest:us-central1:biblioteca-nest,LOGGING_LEVEL=debug',
+      '--quiet'
+    ]
+    id: 'Deploy to Cloud Run'
+
+# Manejo de errores global
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      if [ $? -ne 0 ]; then
+        echo "Error en el paso: ${BUILD_STEP_ID}";
+        exit 1;
+      fi
 
 options:
-  logging: CLOUD_LOGGING_ONLY  # Usa solo Cloud Logging para los registros
+  logging: CLOUD_LOGGING_ONLY
