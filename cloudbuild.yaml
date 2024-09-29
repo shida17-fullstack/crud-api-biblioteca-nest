@@ -1,7 +1,7 @@
 steps:
   # Paso 1: Construir la imagen con soporte de red
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/biblioteca-nest/biblioteca-nest', '.']
+    args: ['build', '--build-arg', 'NODE_ENV=production', '--build-arg', 'PROD_JWT_SECRET_KEY=shida17_prod', '--build-arg', 'DATABASE_USER=root', '--build-arg', 'DATABASE_PASSWORD=shida17', '--build-arg', 'DATABASE_NAME=biblioteca', '--build-arg', 'CLOUD_SQL_CONNECTION_NAME=biblioteca-nest:us-central1:biblioteca-nest', '--build-arg', 'LOGGING_LEVEL=debug', '-t', 'gcr.io/biblioteca-nest/biblioteca-nest', '.']
 
   # Paso 2: Subir la imagen a Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
