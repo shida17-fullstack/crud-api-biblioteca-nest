@@ -3,7 +3,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/biblioteca-nest/biblioteca-nest', '.']
     id: 'Build Image'
-    timeout: '1200s'  # Opcional: ajustar el tiempo de espera
 
   # Paso 2: Subir la imagen a Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
