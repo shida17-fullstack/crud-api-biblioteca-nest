@@ -1,7 +1,7 @@
 steps:
-  # Paso 1: Construir la imagen
+  # Paso 1: Construir la imagen con soporte de red
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/biblioteca-nest/biblioteca-nest', '.']
+    args: ['build', '--network=cloudbuild', '-t', 'gcr.io/biblioteca-nest/biblioteca-nest', '.']
     id: 'Build Image'
 
   # Paso 2: Subir la imagen a Google Container Registry
