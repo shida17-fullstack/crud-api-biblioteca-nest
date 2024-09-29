@@ -3,36 +3,12 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/biblioteca-nest/biblioteca-nest', '.']
     id: 'Build Image'
-    # Manejo de errores para el paso de construcción
     timeout: '1200s'  # Opcional: ajustar el tiempo de espera
-
-  # Manejo de errores para el paso de construcción
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        if [ $? -ne 0 ]; then
-          echo "Error en el paso: Build Image. Verifica la configuración de tu Dockerfile y los archivos de tu proyecto."
-          cat build.log  # Mostrar los logs de la construcción
-          exit 1;
-        fi
 
   # Paso 2: Subir la imagen a Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/biblioteca-nest/biblioteca-nest']
     id: 'Push Image'
-
-  # Manejo de errores para el paso de push
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        if [ $? -ne 0 ]; then
-          echo "Error en el paso: Push Image. Asegúrate de que tienes permisos adecuados para el registro."
-          exit 1;
-        fi
 
   # Paso 3: Desplegar en Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -46,17 +22,6 @@ steps:
       '--quiet'
     ]
     id: 'Deploy to Cloud Run'
-
-  # Manejo de errores para el paso de despliegue
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        if [ $? -ne 0 ]; then
-          echo "Error en el paso: Deploy to Cloud Run. Verifica la configuración y las variables de entorno."
-          exit 1;
-        fi
 
 options:
   logging: CLOUD_LOGGING_ONLY
