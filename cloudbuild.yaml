@@ -3,11 +3,35 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/biblioteca-nest/biblioteca-nest', '.']
     id: 'Build Image'
+    waitFor: ['-']  # Esperar a que no haya pasos previos
+
+  # Manejo de errores para el paso de construcción
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [ $? -ne 0 ]; then
+          echo "Error en el paso: Build Image.";
+          exit 1;
+        fi
 
   # Paso 2: Subir la imagen a Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/biblioteca-nest/biblioteca-nest']
     id: 'Push Image'
+    waitFor: ['Build Image']  # Esperar a que se complete el paso anterior
+
+  # Manejo de errores para el paso de push
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [ $? -ne 0 ]; then
+          echo "Error en el paso: Push Image.";
+          exit 1;
+        fi
 
   # Paso 3: Desplegar en Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -21,15 +45,16 @@ steps:
       '--quiet'
     ]
     id: 'Deploy to Cloud Run'
+    waitFor: ['Push Image']  # Esperar a que se complete el paso anterior
 
-  # Manejo de errores global
+  # Manejo de errores para el paso de despliegue
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
         if [ $? -ne 0 ]; then
-          echo "Error en el paso: ${BUILD_STEP_ID}";
+          echo "Error en el paso: Deploy to Cloud Run.";
           exit 1;
         fi
 
