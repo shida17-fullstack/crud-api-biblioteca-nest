@@ -3,6 +3,8 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/biblioteca-nest/biblioteca-nest', '.']
     id: 'Build Image'
+    # Manejo de errores para el paso de construcción
+    timeout: '1200s'  # Opcional: ajustar el tiempo de espera
 
   # Manejo de errores para el paso de construcción
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -11,7 +13,8 @@ steps:
       - '-c'
       - |
         if [ $? -ne 0 ]; then
-          echo "Error en el paso: Build Image.";
+          echo "Error en el paso: Build Image. Verifica la configuración de tu Dockerfile y los archivos de tu proyecto."
+          cat build.log  # Mostrar los logs de la construcción
           exit 1;
         fi
 
@@ -27,7 +30,7 @@ steps:
       - '-c'
       - |
         if [ $? -ne 0 ]; then
-          echo "Error en el paso: Push Image.";
+          echo "Error en el paso: Push Image. Asegúrate de que tienes permisos adecuados para el registro."
           exit 1;
         fi
 
@@ -51,7 +54,7 @@ steps:
       - '-c'
       - |
         if [ $? -ne 0 ]; then
-          echo "Error en el paso: Deploy to Cloud Run.";
+          echo "Error en el paso: Deploy to Cloud Run. Verifica la configuración y las variables de entorno."
           exit 1;
         fi
 
