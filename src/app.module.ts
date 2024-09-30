@@ -5,50 +5,45 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // Asegura que las variables de entorno estén disponibles globalmente
+    }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule.forRoot()],
+      imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         const isProduction = process.env.NODE_ENV === 'production';
 
         if (isProduction) {
           console.log('Conectando a la base de datos en producción');
           return {
-            type: 'mysql',
-            host: `/cloudsql/${configService.get<string>('CLOUD_SQL_CONNECTION_NAME')}`, // Conexión mediante socket Unix
-            port: parseInt(configService.get<string>('DATABASE_PORT'), 10) || 3306,
-            username: configService.get<string>('DATABASE_USER'),
-            password: configService.get<string>('DATABASE_PASSWORD'),
-            database: configService.get<string>('DATABASE_NAME'),
-            entities: [__dirname + '/**/*.entity{.js}'], // Solo archivos .js en producción
-            synchronize: false, // No sincronizar automáticamente en producción
-            migrationsRun: false, // No ejecutar migraciones automáticamente en producción
+            type: 'postgres', // PostgreSQL para producción
+            host: configService.get<string>('DATABASE_HOST') || 'dpg-crtgdd3v2p9s73ctjhq0-a',
+            port: parseInt(configService.get<string>('DATABASE_PORT'), 10) || 5432,
+            username: configService.get<string>('DATABASE_USER') || 'root',
+            password: configService.get<string>('DATABASE_PASSWORD') || 'nWT4Aik6lxi3yEHb1RzG8zj2v6VtSWEL',
+            database: configService.get<string>('DATABASE_NAME') || 'biblioteca_3kah',
+            entities: [__dirname + '/**/*.entity{.ts,.js}'], // Archivos de entidades
+            synchronize: false, // No sincronizar en producción
             logging: true,
-            migrations: [__dirname + '/../dist/src/v1/migrations/*{.js}'], // Ruta a las migraciones compiladas en dist
-            extra: {
-              connectionLimit: 10, // Configura el límite de conexiones en el pool
-            },
           };
         } else {
           console.log('Conectando a la base de datos en desarrollo');
           return {
-            type: 'mysql',
+            type: 'mysql', // MySQL para desarrollo
             host: configService.get<string>('DATABASE_HOST') || 'localhost',
             port: parseInt(configService.get<string>('DATABASE_PORT'), 10) || 3306,
             username: configService.get<string>('DATABASE_USER') || 'root',
             password: configService.get<string>('DATABASE_PASSWORD') || 'shida17',
             database: configService.get<string>('DATABASE_NAME') || 'biblioteca',
-            entities: [__dirname + '/**/*.entity{.ts,.js}'], // Archivos .ts y .js en desarrollo
+            entities: [__dirname + '/**/*.entity{.ts,.js}'], // Archivos de entidades
             synchronize: true, // Sincronizar automáticamente en desarrollo
-            migrations: [__dirname + '/../src/v1/migrations/*{.ts,.js}'], // Ruta a las migraciones en src
-            extra: {
-              connectionLimit: 10, // Configura el límite de conexiones en el pool también para desarrollo
-            },
+            logging: true,
           };
         }
       },
       inject: [ConfigService],
     }),
-    V1Module, // Incluye tus módulos adicionales
+    V1Module, // Incluye otros módulos necesarios
   ],
 })
 export class AppModule {}
