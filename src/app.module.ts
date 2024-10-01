@@ -17,7 +17,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           console.log('Conectando a la base de datos en producción');
           return {
             type: 'postgres', // PostgreSQL para producción
-            url: process.env.DATABASE_URL || 'postgresql://root:nWT4Aik6lxi3yEHb1RzG8zj2v6VtSWEL@dpg-crtgdd3v2p9s73ctjhq0-a/biblioteca_3kah',
+            url: process.env.DATABASE_URL || 'postgresql://root:nWT4Aik6lxi3yEHb1RzG8zj2v6VtSWEL@dpg-crtgdd3v2p9s73ctjhq0-a.oregon-postgres.render.com/biblioteca_3kah',
             entities: [__dirname + '/**/*.entity{.ts,.js}'], // Archivos de entidades
             synchronize: false, // No sincronizar en producción
             logging: true,
