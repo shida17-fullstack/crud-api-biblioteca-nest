@@ -3,7 +3,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module'; // Importa el módulo principal de la aplicación
 import * as dotenv from 'dotenv';
 
-
 // Carga las variables de entorno desde un archivo .env
 dotenv.config();
 
@@ -39,7 +38,7 @@ async function bootstrap() {
   SwaggerModule.setup('api/v1/api-docs', app, document); 
 
   // Configura el puerto en el que la aplicación escuchará las peticiones
-  const port = process.env.PORT || 8080;  // Cambiar el puerto a 8080 por defecto
+  const port = parseInt(process.env.PORT, 10); // Solo usar process.env.PORT sin número por defecto
   await app.listen(port);
   console.log(`Aplicación escuchando en el puerto ${port}`);
 }
