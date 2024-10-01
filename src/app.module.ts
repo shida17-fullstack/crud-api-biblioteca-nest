@@ -17,7 +17,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           console.log('Conectando a la base de datos en producción');
           return {
             type: 'postgres', // PostgreSQL para producción
-            url: configService.get<string>('DATABASE_URL') || 'postgresql://root:nWT4Aik6lxi3yEHb1RzG8zj2v6VtSWEL@dpg-crtgdd3v2p9s73ctjhq0-a/biblioteca_3kah',
+            url: process.env.DATABASE_URL || 'postgresql://root:nWT4Aik6lxi3yEHb1RzG8zj2v6VtSWEL@dpg-crtgdd3v2p9s73ctjhq0-a/biblioteca_3kah',
             entities: [__dirname + '/**/*.entity{.ts,.js}'], // Archivos de entidades
             synchronize: false, // No sincronizar en producción
             logging: true,
@@ -26,11 +26,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           console.log('Conectando a la base de datos en desarrollo');
           return {
             type: 'mysql', // MySQL para desarrollo
-            host: configService.get<string>('DATABASE_HOST') || 'localhost',
-            port: parseInt(configService.get<string>('DATABASE_PORT'), 10) || 3306,
-            username: configService.get<string>('DATABASE_USER') || 'root',
-            password: configService.get<string>('DATABASE_PASSWORD') || 'shida17',
-            database: configService.get<string>('DATABASE_NAME') || 'biblioteca',
+            host: process.env.DATABASE_HOST || 'localhost',
+            port: parseInt(process.env.DATABASE_PORT, 10) || 3306,
+            username: process.env.DATABASE_USER || 'root',
+            password: process.env.DATABASE_PASSWORD || 'shida17',
+            database: process.env.DATABASE_NAME || 'biblioteca',
             entities: [__dirname + '/**/*.entity{.ts,.js}'], // Archivos de entidades
             synchronize: true, // Sincronizar automáticamente en desarrollo
             logging: true,

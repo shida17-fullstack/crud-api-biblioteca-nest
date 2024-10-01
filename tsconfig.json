@@ -26,9 +26,8 @@
       "@auth/*": ["v1/auth/*"],
       "@roles/*": ["v1/roles/*"],
       "@health/*": ["v1/health/*"],  // Alias para health
-      "@src/*": ["*"],
-      "@test/*": ["../test/*"]
-      
+      "@src/*": ["./src/*"],
+      "@test/*": ["../test/*"]  
     },
     "typeRoots": ["./node_modules/@types", "./@types"],
     "types": ["node", "jest", "express"]
