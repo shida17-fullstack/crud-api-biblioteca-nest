@@ -14,6 +14,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         const isProduction = process.env.NODE_ENV === 'production';
         const sslEnabled = process.env.SSL === 'true';
 
+        console.log('Entorno de ejecución:', process.env.NODE_ENV);
+        console.log('SSL Enabled:', sslEnabled);
+
         if (isProduction) {
           console.log('Conectando a la base de datos en producción');
           return {
@@ -27,7 +30,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
             synchronize: false, // No sincronizar en producción
             logging: true,
             ssl: sslEnabled
-              ? { rejectUnauthorized: false } // SSL activado con verificación deshabilitada
+              ? { rejectUnauthorized: false } // Deshabilitar verificación de certificado si es necesario
               : false, // No usar SSL si no está habilitado
           };
         } else {

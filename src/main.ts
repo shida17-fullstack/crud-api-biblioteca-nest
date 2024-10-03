@@ -38,8 +38,9 @@ async function bootstrap() {
   SwaggerModule.setup('api/v1/api-docs', app, document); 
 
   // Configura el puerto en el que la aplicación escuchará las peticiones
-  const port = parseInt(process.env.PORT, 10); // Solo usar process.env.PORT sin número por defecto
-  await app.listen(port);
+  const port = parseInt(process.env.PORT, 10) || 3000;
+  await app.listen(port);// Configura el puerto en el que la aplicación escuchará las peticioneconst port = parseInt(process.env.PORT, 10) || 3000;s
+  
   console.log(`Aplicación escuchando en el puerto ${port}`);
 }
 
