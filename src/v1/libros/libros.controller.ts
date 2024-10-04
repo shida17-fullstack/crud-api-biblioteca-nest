@@ -18,7 +18,7 @@ import { Libro } from '@libros/libro.entity';
 import { CreateLibroDTO } from '@libros/dto/create-libro.dto';
 import { UpdateLibroDTO } from '@libros/dto/update-libro.dto';
 import { JwtAuthGuard } from '@auth/jwt-auth.guard';
-import { Request } from 'express';
+import { Request } '@nestjs/common';
 import { JwtPayload } from '@auth/jwt-payload.interface';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
