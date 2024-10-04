@@ -22,7 +22,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           return {
             type: 'postgres',
             host: configService.get('DATABASE_HOST'),
-            port: parseInt(configService.get('DATABASE_PORT', '5432')), // Corregido
+            port: parseInt(configService.get<string>('DATABASE_PORT', '5432')), // Corregido: el valor por defecto es un string
             username: configService.get('DATABASE_USERNAME'),
             password: configService.get('DATABASE_PASSWORD'),
             database: configService.get('DATABASE_NAME'),
@@ -38,7 +38,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           return {
             type: 'mysql',
             host: configService.get('DATABASE_HOST', 'localhost'),
-            port: parseInt(configService.get('DATABASE_PORT', '3306')), // Corregido
+            port: parseInt(configService.get<string>('DATABASE_PORT', '3306')), // Corregido: el valor por defecto es un string
             username: configService.get('DATABASE_USER', 'root'),
             password: configService.get('DATABASE_PASSWORD', 'shida17'),
             database: configService.get('DATABASE_NAME', 'biblioteca'),
