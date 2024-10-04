@@ -21,7 +21,7 @@ import { JwtPayload } from '@auth/jwt-payload.interface';
 import { RegisterDto } from '@usuarios/dto/register.dto';
 import { LoginDto } from '@usuarios/dto/login.dto';
 import { UpdateDto } from '@usuarios/dto/update.dto';
-import { Request } from '@nestjs/common';
+import { Request } from 'express';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth, ApiParam} from '@nestjs/swagger';
 
 /**
