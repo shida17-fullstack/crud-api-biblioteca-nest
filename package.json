@@ -18,7 +18,7 @@
     "test:debug": "node --inspect-brk -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test:clearCache": "jest --clearCache",
-    "build": "echo 'Starting TypeScript compilation...' && tsc -p tsconfig.build.json > build.log 2>&1 && echo 'TypeScript compilation done. Starting tsc-alias...' && tsc-alias -p tsconfig.build.json >> build.log 2>&1 && echo 'Build complete.' && tail -f build.log",
+    "build": "echo 'Starting TypeScript compilation...' && tsc -p tsconfig.build.json 2>&1 | tee build.log && echo 'TypeScript compilation done. Starting tsc-alias...' && tsc-alias -p tsconfig.build.json 2>&1 | tee -a build.log && echo 'Build complete.'",
     "start:prod": "npm run build && node --trace-deprecation dist/src/main.js"
   },
   "dependencies": {
