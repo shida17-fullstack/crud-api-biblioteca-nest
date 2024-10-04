@@ -21,7 +21,7 @@ import { ConfigModule } from '@nestjs/config';
           return {
             type: 'postgres',
             host: process.env.DATABASE_HOST,
-            port: Number(process.env.DATABASE_PORT) || 5432, // Conversión a número
+            port: parseInt(process.env.DATABASE_PORT),
             username: process.env.DATABASE_USERNAME,
             password: process.env.DATABASE_PASSWORD,
             database: process.env.DATABASE_NAME,
@@ -37,7 +37,7 @@ import { ConfigModule } from '@nestjs/config';
           return {
             type: 'mysql',
             host: process.env.DATABASE_HOST || 'localhost',
-            port: Number(process.env.DATABASE_PORT) || 3306, // Conversión a número
+            port: parseInt(process.env.DATABASE_PORT),
             username: process.env.DATABASE_USER || 'root',
             password: process.env.DATABASE_PASSWORD || 'shida17',
             database: process.env.DATABASE_NAME || 'biblioteca',
