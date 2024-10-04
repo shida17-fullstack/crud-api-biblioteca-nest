@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { V1Module } from '@v1/v1.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -9,8 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => {
+      useFactory: async () => {
         const isProduction = process.env.NODE_ENV === 'production';
         const sslEnabled = process.env.SSL === 'true';
 
@@ -21,12 +20,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           console.log('Conectando a la base de datos en producción');
           return {
             type: 'postgres',
-            host: configService.get<string>('DATABASE_HOST'),
-            // Usamos Number para convertir el puerto de string a número
-            port: Number(configService.get<string>('DATABASE_PORT')) || 5432,
-            username: configService.get<string>('DATABASE_USERNAME'),
-            password: configService.get<string>('DATABASE_PASSWORD'),
-            database: configService.get<string>('DATABASE_NAME'),
+            host: process.env.DATABASE_HOST,
+            port: Number(process.env.DATABASE_PORT) || 5432, // Conversión a número
+            username: process.env.DATABASE_USERNAME,
+            password: process.env.DATABASE_PASSWORD,
+            database: process.env.DATABASE_NAME,
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             synchronize: false,
             logging: true,
@@ -38,19 +36,18 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           console.log('Conectando a la base de datos en desarrollo');
           return {
             type: 'mysql',
-            host: configService.get<string>('DATABASE_HOST', 'localhost'),
-            // Usamos Number para convertir el puerto de string a número
-            port: Number(configService.get<string>('DATABASE_PORT')) || 3306,
-            username: configService.get<string>('DATABASE_USER', 'root'),
-            password: configService.get<string>('DATABASE_PASSWORD', 'shida17'),
-            database: configService.get<string>('DATABASE_NAME', 'biblioteca'),
+            host: process.env.DATABASE_HOST || 'localhost',
+            port: Number(process.env.DATABASE_PORT) || 3306, // Conversión a número
+            username: process.env.DATABASE_USER || 'root',
+            password: process.env.DATABASE_PASSWORD || 'shida17',
+            database: process.env.DATABASE_NAME || 'biblioteca',
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             synchronize: true,
             logging: true,
           };
         }
       },
-      inject: [ConfigService],
+      inject: [],
     }),
     V1Module,
   ],
