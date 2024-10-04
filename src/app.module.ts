@@ -22,8 +22,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           return {
             type: 'postgres',
             host: configService.get<string>('DATABASE_HOST'),
-            // Usando el operador "+" para convertir la cadena a número
-            port: +configService.get<string>('DATABASE_PORT') || 5432, 
+            // Usamos Number para convertir el puerto de string a número
+            port: Number(configService.get<string>('DATABASE_PORT')) || 5432,
             username: configService.get<string>('DATABASE_USERNAME'),
             password: configService.get<string>('DATABASE_PASSWORD'),
             database: configService.get<string>('DATABASE_NAME'),
@@ -39,7 +39,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           return {
             type: 'mysql',
             host: configService.get<string>('DATABASE_HOST', 'localhost'),
-            port: +configService.get<string>('DATABASE_PORT') || 3306, 
+            // Usamos Number para convertir el puerto de string a número
+            port: Number(configService.get<string>('DATABASE_PORT')) || 3306,
             username: configService.get<string>('DATABASE_USER', 'root'),
             password: configService.get<string>('DATABASE_PASSWORD', 'shida17'),
             database: configService.get<string>('DATABASE_NAME', 'biblioteca'),
