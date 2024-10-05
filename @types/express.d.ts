@@ -11,3 +11,6 @@ declare global {
     }
   }
 }
+
+// Exporta una variable vacía para que este archivo se trate como un módulo
+export {};
