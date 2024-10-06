@@ -1,5 +1,5 @@
 import { Usuario } from '@usuarios/usuario.entity';
-import { Express.Request} from 'express';
+import { Express, Request} from 'express';
 
 
 declare global {
