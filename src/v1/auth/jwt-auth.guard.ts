@@ -1,4 +1,3 @@
-// src/v1/auth/jwt-auth.guard.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -8,7 +7,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (err || !user) {
       throw err || new UnauthorizedException('No autorizado');
     }
-    // 'user' aquí es el objeto retornado por JwtStrategy
-    return user; // Contiene 'usuarioId' y 'nombreUsuario'
+    console.log('Usuario autenticado:', user); // Agrega este log
+    return user; // 'user' debe contener 'usuarioId' y 'nombreUsuario'
   }
 }
