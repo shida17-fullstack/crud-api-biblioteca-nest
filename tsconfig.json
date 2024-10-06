@@ -31,6 +31,6 @@
     "typeRoots": ["./node_modules/@types", "./@types"],
     "types": ["node", "jest", "express"]
   },
-  "include": ["src/**/*", "test/**/*"],
+  "include": ["src/**/*", "test/**/*", "types/**/*"],  // Sin arroba
   "files": ["./@types/express.d.ts"]
 }
