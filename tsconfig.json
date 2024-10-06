@@ -24,13 +24,13 @@
       "@reservas/*": ["v1/reservas/*"],
       "@auth/*": ["v1/auth/*"],
       "@roles/*": ["v1/roles/*"],
-      "@health/*": ["v1/health/*"],  // Alias para health
+      "@health/*": ["v1/health/*"],
       "@src/*": ["./src/*"],
-      "@test/*": ["../test/*"]  
+      "@test/*": ["../test/*"]
     },
-    "typeRoots": ["./node_modules/@types", "./@types"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],  // Actualizado para incluir types en src
     "types": ["node", "jest", "express"]
   },
-  "include": ["src/**/*", "test/**/*", "types/**/*"],  // Sin arroba
-  "files": ["./@types/express.d.ts"]
+  "include": ["src/**/*", "test/**/*", "src/types/**/*"],  // Cambiado a src/types
+  "files": ["src/types/express.d.ts"]  // La ruta ahora es src/types/express.d.ts
 }

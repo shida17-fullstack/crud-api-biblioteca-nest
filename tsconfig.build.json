@@ -1,11 +1,15 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-      "types": ["express"]
+    "types": ["express"],  // Incluye las definiciones de tipo de Express
+    "outDir": "./dist/src"  // Asegúrate de que la salida esté en dist/src
   },
   "include": [
-    "src/**/*",
-    "@types/**/*"
+    "src/**/*",          // Incluye todo el contenido de src
+    "src/types/**/*"      // Incluye la carpeta de types personalizada dentro de src
   ],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": [
+    "node_modules",      // Excluye node_modules
+    "**/*.spec.ts"       // Excluye archivos de test específicos
+  ]
 }
