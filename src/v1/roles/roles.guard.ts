@@ -1,3 +1,4 @@
+// src/v1/roles/roles.guard.ts
 import {
   Injectable,
   CanActivate,
@@ -8,7 +9,7 @@ import { Reflector } from '@nestjs/core';
 import { Rol } from '@usuarios/usuario.entity'; 
 import { JwtPayload } from '@auth/jwt-payload.interface'; 
 import { RolesService } from '@roles/roles.service';
-// No necesitas la importación explícita de Request desde 'express'
+import { Request } from 'express'; 
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -27,8 +28,8 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    // Puedes usar directamente el tipo Request extendido globalmente
     const request = context.switchToHttp().getRequest<Request>();
+    // Usa una aserción para asegurar que `user` es de tipo `JwtPayload`
     const usuario = request.user as JwtPayload;
 
     if (!usuario) {
