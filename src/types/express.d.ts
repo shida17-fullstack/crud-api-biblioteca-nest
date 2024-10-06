@@ -1,4 +1,5 @@
 import { Usuario } from '@usuarios/usuario.entity';
+import { Request as ExpressRequest } from 'express';
 
 
 declare global {
