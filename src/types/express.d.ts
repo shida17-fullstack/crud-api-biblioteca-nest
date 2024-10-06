@@ -1,16 +1,13 @@
 import { Usuario } from '@usuarios/usuario.entity';
-import { Request } from 'express'; 
+import { Request } from 'express'; // Importa solo el tipo
 
-
-declare global {
-  namespace Express {
-    interface Request {
-      user?: {
-        usuarioId: number;
-        sub?: number; // ID del usuario extraído del JWT
-        nombreUsuario?: string; // Nombre de usuario extraído del JWT (opcional)
-      };
-    }
+declare module 'express' {
+  export interface Request {
+    user?: {
+      usuarioId: number;
+      sub?: number; // ID del usuario extraído del JWT
+      nombreUsuario?: string; // Nombre de usuario extraído del JWT (opcional)
+    };
   }
 }
 
