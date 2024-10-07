@@ -28,7 +28,8 @@ import { V1Module } from '@v1/v1.module';
               ssl: sslEnabled
                 ? { rejectUnauthorized: false }
                 : false,
-              connectTimeoutMS: 30000,  // 30 segundos para el timeout de conexión  
+                connectTimeoutMS: 60000,  // 60 segundos para el timeout de conexión
+                
               extra: {
                 application_name: 'crud-api-biblioteca-nest', // Nombre de la aplicación
               },
