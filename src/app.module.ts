@@ -1,6 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Module, Logger } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { V1Module } from '@v1/v1.module';
+
+const logger = new Logger('AppModule');
 
 @Module({
   imports: [
@@ -10,11 +12,11 @@ import { V1Module } from '@v1/v1.module';
           const isProduction = process.env.NODE_ENV === 'production';
           const sslEnabled = process.env.SSL === 'true';
 
-          console.log('Entorno de ejecución:', process.env.NODE_ENV);
-          console.log('SSL Enabled:', sslEnabled);
+          logger.log('Entorno de ejecución: ' + process.env.NODE_ENV);
+          logger.log('SSL Enabled: ' + sslEnabled);
 
           if (isProduction) {
-            console.log('Conectando a la base de datos en producción');
+            logger.log('Conectando a la base de datos en producción');
             return {
               type: 'postgres',
               host: process.env.DATABASE_HOST,
@@ -28,14 +30,13 @@ import { V1Module } from '@v1/v1.module';
               ssl: sslEnabled
                 ? { rejectUnauthorized: false }
                 : false,
-                connectTimeoutMS: 60000,  // 60 segundos para el timeout de conexión
-                
+              connectTimeoutMS: 60000,  // 60 segundos para el timeout de conexión
               extra: {
                 application_name: 'crud-api-biblioteca-nest', // Nombre de la aplicación
               },
             };
           } else {
-            console.log('Conectando a la base de datos en desarrollo');
+            logger.log('Conectando a la base de datos en desarrollo');
             return {
               type: 'mysql',
               host: process.env.DATABASE_HOST || 'localhost',
@@ -50,8 +51,7 @@ import { V1Module } from '@v1/v1.module';
           }
         } catch (error) {
           // Captura y muestra el error
-          console.error('Error al configurar la conexión a la base de datos:', error.message);
-          console.error('Detalles completos del error:', error);
+          logger.error('Error al configurar la conexión a la base de datos:', error.stack);
           throw new Error('No se pudo establecer la conexión con la base de datos.');
         }
       },
