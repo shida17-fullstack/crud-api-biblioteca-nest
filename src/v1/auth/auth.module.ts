@@ -10,12 +10,16 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    forwardRef(() => UsuariosModule), // Usa forwardRef para evitar dependencia circular
+    forwardRef(() => UsuariosModule),
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET_KEY'),
+        secret: configService.get<string>(
+          configService.get<string>('NODE_ENV') === 'production' 
+            ? 'PROD_JWT_SECRET_KEY' 
+            : 'JWT_SECRET_KEY'
+        ),
         signOptions: { expiresIn: '1h' },
       }),
       inject: [ConfigService],
@@ -23,6 +27,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   ],
   providers: [AuthService, JwtStrategy, LocalStrategy],
   controllers: [AuthController],
-  exports: [AuthService, JwtModule, PassportModule], // Exporta AuthService, JwtModule y PassportModule
+  exports: [AuthService, JwtModule, PassportModule],
 })
 export class AuthModule {}
+
+
