@@ -51,4 +51,4 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Ignorar todo el contenido de src excepto los archivos que decides mantener
-/src/*
+/src
