@@ -35,7 +35,7 @@ async create(
   @Req() req: any, // Accede a la solicitud para obtener el usuario autenticado
 ): Promise<{ message: string; reserva: Reserva }> {
   const usuarioAutenticado: JwtPayload = {
-    sub: req.user.usuarioId, // Asegúrate de que esto sea correcto
+    sub: req.user.usuarioId, 
     nombreUsuario: req.user.nombreUsuario,
   };
 

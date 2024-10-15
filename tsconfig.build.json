@@ -2,7 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "types": ["express"],  // Incluye las definiciones de tipo de Express
-    "outDir": "./dist/src"  // Asegúrate de que la salida esté en dist/src
+    "outDir": "./dist/src"  
   },
   "include": [
     "src/**/*",          // Incluye todo el contenido de src

@@ -5,10 +5,10 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-// Use alias configurados en tsconfig.json para rutas absolutas
-import { Usuario } from '@usuarios/usuario.entity'; //Ruta Absoluta
-import { Libro } from '@libros/libro.entity'; //Ruta Absoluta
-import { Prestamo } from '@prestamos/prestamo.entity'; //Ruta Absoluta
+import { ApiProperty } from '@nestjs/swagger'; // Importar ApiProperty
+import { Usuario } from '@usuarios/usuario.entity'; // Ruta Absoluta
+import { Libro } from '@libros/libro.entity'; // Ruta Absoluta
+import { Prestamo } from '@prestamos/prestamo.entity'; // Ruta Absoluta
 
 /**
  * Representa una reserva en la base de datos.
@@ -20,6 +20,7 @@ export class Reserva {
    * Este campo es la clave primaria y se genera automáticamente.
    */
   @PrimaryGeneratedColumn()
+  @ApiProperty({ description: 'Identificador único de la reserva' }) // Swagger
   id: number;
 
   /**
@@ -29,6 +30,7 @@ export class Reserva {
    */
   @ManyToOne(() => Usuario, (usuario) => usuario.reservas)
   @JoinColumn({ name: 'usuarioId' })
+  @ApiProperty({ description: 'Usuario que realizó la reserva', type: () => Usuario }) // Swagger
   usuario: Usuario;
 
   /**
@@ -38,6 +40,7 @@ export class Reserva {
    */
   @ManyToOne(() => Libro, (libro) => libro.reservas)
   @JoinColumn({ name: 'libroId' })
+  @ApiProperty({ description: 'Libro que ha sido reservado', type: () => Libro }) // Swagger
   libro: Libro;
 
   /**
@@ -45,6 +48,7 @@ export class Reserva {
    * Este campo almacena la fecha y hora en que se creó la reserva.
    */
   @Column()
+  @ApiProperty({ description: 'Fecha en que se realizó la reserva', type: 'string', format: 'date-time' }) // Swagger
   fechaReserva: Date;
 
   /**
@@ -53,13 +57,15 @@ export class Reserva {
    * Indica cuándo se informó al usuario de que su reserva está lista o confirmada.
    */
   @Column({ nullable: true })
+  @ApiProperty({ description: 'Fecha en que se notificó al usuario sobre la reserva', type: 'string', format: 'date-time', nullable: true }) // Swagger
   fechaNotificacion: Date;
 
   /**
-   * Indica si la reserva está eliminada.
-   * Este campo es un marcador lógico que permite el borrado suave (soft delete) de la reserva sin eliminarla físicamente de la base de datos.
+   * Indica si la reserva ha sido marcada como eliminada.
+   * Este campo es un booleano que, por defecto, es falso (`false`), indicando que la reserva está activa.
    */
   @Column({ default: false })
+  @ApiProperty({ description: 'Indica si la reserva ha sido marcada como eliminada', default: false }) // Swagger
   isDeleted: boolean;
 
   /**
@@ -70,5 +76,6 @@ export class Reserva {
    */
   @ManyToOne(() => Prestamo, (prestamo) => prestamo.reserva, { nullable: true })
   @JoinColumn({ name: 'prestamoId' })
+  @ApiProperty({ description: 'Préstamo asociado a la reserva (opcional)', type: () => Prestamo, nullable: true }) // Swagger
   prestamo: Prestamo;
 }

@@ -39,7 +39,7 @@ async function bootstrap() {
 
   // Configura el puerto en el que la aplicación escuchará las peticiones
   const port = parseInt(process.env.PORT, 10) || 3000;
-  await app.listen(port);// Configura el puerto en el que la aplicación escuchará las peticioneconst port = parseInt(process.env.PORT, 10) || 3000;s
+  await app.listen(port);// Configura el puerto en el que la aplicación escuchará las peticioneconst port = parseInt(process.env.PORT, 10) || 3000;
   
   console.log(`Aplicación escuchando en el puerto ${port}`);
 }

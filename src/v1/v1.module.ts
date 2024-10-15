@@ -10,10 +10,10 @@ import { Libro } from '@libros/libro.entity'; // Ruta Absoluta
 import { Prestamo } from '@prestamos/prestamo.entity'; // Ruta Absoluta
 import { Reserva } from '@reservas/reserva.entity'; // Ruta Absoluta
 import { Usuario } from '@usuarios/usuario.entity'; // Ruta Absoluta
-import { RolesService } from '@roles/roles.service';
-import { RolesController } from '@roles/roles.controller';
-import { RolesModule } from '@roles/roles.module';
-import { HealthModule } from '@health/health.module';
+import { RolesService } from '@roles/roles.service';// Ruta Absoluta
+import { RolesController } from '@roles/roles.controller';// Ruta Absoluta
+import { RolesModule } from '@roles/roles.module';// Ruta Absoluta
+import { HealthModule } from '@health/health.module';// Ruta Absoluta
 
 /**
  * Módulo principal para la versión 1 de la API.

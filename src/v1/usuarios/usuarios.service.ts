@@ -213,7 +213,7 @@ async findAll(usuarioAutenticado: JwtPayload): Promise<{ usuarios: Usuario[], ca
     return { message: `Usuario con ID ${id} eliminado exitosamente` };
   }
 
-  @ApiOperation({ summary: 'Actualiza los datos de un usuario' })
+@ApiOperation({ summary: 'Actualiza los datos de un usuario' })
 @ApiParam({ name: 'id', description: 'ID del usuario a actualizar', type: Number })
 @ApiBody({ type: UpdateDto })
 async update(

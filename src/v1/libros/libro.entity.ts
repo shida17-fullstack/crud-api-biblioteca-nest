@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-// Use alias configurados en tsconfig.json para rutas absolutas
-import { Reserva } from '@reservas/reserva.entity'; //Ruta Absoluta
-import { Prestamo } from '@prestamos/prestamo.entity'; //Ruta Absoluta
+import { ApiProperty } from '@nestjs/swagger'; // Importar ApiProperty
+import { Reserva } from '@reservas/reserva.entity'; // Ruta Absoluta
+import { Prestamo } from '@prestamos/prestamo.entity'; // Ruta Absoluta
 
 /**
  * La entidad Libro representa un libro en la biblioteca.
@@ -14,6 +14,7 @@ export class Libro {
    * Este campo es la clave primaria y se genera automáticamente.
    */
   @PrimaryGeneratedColumn()
+  @ApiProperty({ description: 'Identificador único del libro' }) // Swagger
   id: number;
 
   /**
@@ -21,6 +22,7 @@ export class Libro {
    * Este campo almacena el título del libro como una cadena de texto.
    */
   @Column()
+  @ApiProperty({ description: 'Título del libro' }) // Swagger
   titulo: string;
 
   /**
@@ -28,6 +30,7 @@ export class Libro {
    * Este campo almacena el nombre del autor del libro.
    */
   @Column()
+  @ApiProperty({ description: 'Autor del libro' }) // Swagger
   autor: string;
 
   /**
@@ -35,6 +38,7 @@ export class Libro {
    * Este campo almacena la nacionalidad del autor.
    */
   @Column()
+  @ApiProperty({ description: 'Nacionalidad del autor del libro' }) // Swagger
   nacionalidadAutor: string;
 
   /**
@@ -42,6 +46,7 @@ export class Libro {
    * Este campo almacena la temática o el género del libro.
    */
   @Column()
+  @ApiProperty({ description: 'Temática del libro' }) // Swagger
   tematica: string;
 
   /**
@@ -49,6 +54,7 @@ export class Libro {
    * Este campo almacena el año en que el libro fue publicado.
    */
   @Column()
+  @ApiProperty({ description: 'Año de publicación del libro' }) // Swagger
   anioPublicacion: number;
 
   /**
@@ -56,6 +62,7 @@ export class Libro {
    * Este campo almacena un extracto o resumen del libro con una longitud máxima de 1000 caracteres.
    */
   @Column({ length: 1000 })
+  @ApiProperty({ description: 'Extracto del libro', maxLength: 1000 }) // Swagger
   extracto: string;
 
   /**
@@ -63,6 +70,7 @@ export class Libro {
    * Este campo almacena el nombre de la editorial que publicó el libro.
    */
   @Column()
+  @ApiProperty({ description: 'Editorial del libro' }) // Swagger
   editorial: string;
 
   /**
@@ -70,6 +78,7 @@ export class Libro {
    * Este campo es un booleano que, por defecto, es verdadero (`true`), lo que significa que el libro está disponible.
    */
   @Column({ default: true })
+  @ApiProperty({ description: 'Indica si el libro está disponible para préstamo o reserva', default: true }) // Swagger
   disponible: boolean;
 
   /**
@@ -77,6 +86,7 @@ export class Libro {
    * Este campo es un booleano que indica si el libro ha sido eliminado. El valor predeterminado es `false` (no eliminado).
    */
   @Column({ default: false })
+  @ApiProperty({ description: 'Indica si el libro está eliminado', default: false }) // Swagger
   isDeleted: boolean;
 
   /**
@@ -85,6 +95,7 @@ export class Libro {
    * Un libro puede tener múltiples reservas.
    */
   @OneToMany(() => Reserva, (reserva) => reserva.libro)
+  @ApiProperty({ type: () => Reserva, isArray: true }) // Swagger
   reservas: Reserva[];
 
   /**
@@ -93,5 +104,6 @@ export class Libro {
    * Un libro puede tener múltiples préstamos.
    */
   @OneToMany(() => Prestamo, (prestamo) => prestamo.libro)
+  @ApiProperty({ type: () => Prestamo, isArray: true }) // Swagger
   prestamos: Prestamo[];
 }

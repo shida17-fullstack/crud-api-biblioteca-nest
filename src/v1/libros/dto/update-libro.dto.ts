@@ -5,6 +5,7 @@ import {
   IsBoolean,
   MaxLength,
 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 /**
  * Data Transfer Object (DTO) para actualizar un libro.
@@ -25,6 +26,7 @@ export class UpdateLibroDTO {
    * @type {string}
    * @memberof UpdateLibroDTO
    */
+  @ApiProperty({ description: 'Título del libro', example: 'Cien años de soledad', required: false })
   @IsString()
   @IsOptional()
   titulo?: string;
@@ -37,6 +39,7 @@ export class UpdateLibroDTO {
    * @type {string}
    * @memberof UpdateLibroDTO
    */
+  @ApiProperty({ description: 'Autor del libro', example: 'Gabriel García Márquez', required: false })
   @IsString()
   @IsOptional()
   autor?: string;
@@ -49,6 +52,7 @@ export class UpdateLibroDTO {
    * @type {string}
    * @memberof UpdateLibroDTO
    */
+  @ApiProperty({ description: 'Nacionalidad del autor', example: 'Colombiano', required: false })
   @IsString()
   @IsOptional()
   nacionalidadAutor?: string;
@@ -61,6 +65,7 @@ export class UpdateLibroDTO {
    * @type {string}
    * @memberof UpdateLibroDTO
    */
+  @ApiProperty({ description: 'Temática del libro', example: 'Realismo mágico', required: false })
   @IsString()
   @IsOptional()
   tematica?: string;
@@ -73,6 +78,7 @@ export class UpdateLibroDTO {
    * @type {number}
    * @memberof UpdateLibroDTO
    */
+  @ApiProperty({ description: 'Año de publicación del libro', example: 1967, required: false })
   @IsNumber()
   @IsOptional()
   anioPublicacion?: number;
@@ -85,6 +91,7 @@ export class UpdateLibroDTO {
    * @type {string}
    * @memberof UpdateLibroDTO
    */
+  @ApiProperty({ description: 'Extracto o resumen del libro', maxLength: 1000, required: false, example: 'Un libro que narra la historia de la familia Buendía...' })
   @IsString()
   @MaxLength(1000)
   @IsOptional()
@@ -98,6 +105,7 @@ export class UpdateLibroDTO {
    * @type {string}
    * @memberof UpdateLibroDTO
    */
+  @ApiProperty({ description: 'Editorial que publicó el libro', example: 'Editorial Sudamericana', required: false })
   @IsString()
   @IsOptional()
   editorial?: string;
@@ -110,6 +118,7 @@ export class UpdateLibroDTO {
    * @type {boolean}
    * @memberof UpdateLibroDTO
    */
+  @ApiProperty({ description: 'Disponibilidad del libro', example: true, required: false })
   @IsBoolean()
   @IsOptional()
   disponible?: boolean;

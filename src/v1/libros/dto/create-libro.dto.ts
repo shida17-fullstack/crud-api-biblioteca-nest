@@ -5,6 +5,7 @@ import {
   IsBoolean,
   MaxLength,
 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 /**
  * Data Transfer Object (DTO) para crear un nuevo libro.
@@ -24,6 +25,7 @@ export class CreateLibroDTO {
    * @type {string}
    * @memberof CreateLibroDTO
    */
+  @ApiProperty({ description: 'Título del libro', example: 'Cien años de soledad' })
   @IsString()
   @IsNotEmpty()
   titulo: string;
@@ -36,6 +38,7 @@ export class CreateLibroDTO {
    * @type {string}
    * @memberof CreateLibroDTO
    */
+  @ApiProperty({ description: 'Autor del libro', example: 'Gabriel García Márquez' })
   @IsString()
   @IsNotEmpty()
   autor: string;
@@ -48,6 +51,7 @@ export class CreateLibroDTO {
    * @type {string}
    * @memberof CreateLibroDTO
    */
+  @ApiProperty({ description: 'Nacionalidad del autor', example: 'Colombiano' })
   @IsString()
   @IsNotEmpty()
   nacionalidadAutor: string;
@@ -60,6 +64,7 @@ export class CreateLibroDTO {
    * @type {string}
    * @memberof CreateLibroDTO
    */
+  @ApiProperty({ description: 'Temática del libro', example: 'Realismo mágico' })
   @IsString()
   @IsNotEmpty()
   tematica: string;
@@ -72,6 +77,7 @@ export class CreateLibroDTO {
    * @type {number}
    * @memberof CreateLibroDTO
    */
+  @ApiProperty({ description: 'Año de publicación del libro', example: 1967 })
   @IsNumber()
   @IsNotEmpty()
   anioPublicacion: number;
@@ -84,6 +90,7 @@ export class CreateLibroDTO {
    * @type {string}
    * @memberof CreateLibroDTO
    */
+  @ApiProperty({ description: 'Extracto o resumen del libro', maxLength: 1000, example: 'Un libro que narra la historia de la familia Buendía...' })
   @IsString()
   @MaxLength(1000)
   @IsNotEmpty()
@@ -97,6 +104,7 @@ export class CreateLibroDTO {
    * @type {string}
    * @memberof CreateLibroDTO
    */
+  @ApiProperty({ description: 'Editorial que publicó el libro', example: 'Editorial Sudamericana' })
   @IsString()
   @IsNotEmpty()
   editorial: string;
@@ -109,6 +117,7 @@ export class CreateLibroDTO {
    * @type {boolean}
    * @memberof CreateLibroDTO
    */
+  @ApiProperty({ description: 'Disponibilidad del libro', example: true })
   @IsBoolean()
   @IsNotEmpty()
   disponible: boolean;

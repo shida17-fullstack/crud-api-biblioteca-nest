@@ -28,9 +28,9 @@
       "@src/*": ["./src/*"],
       "@test/*": ["../test/*"]
     },
-    "typeRoots": ["./node_modules/@types", "./src/types"],  // Actualizado para incluir types en src
+    "typeRoots": ["./node_modules/@types", "./src/types"],  
     "types": ["node", "jest", "express"]
   },
-  "include": ["src/**/*", "test/**/*", "src/types/**/*"],  // Cambiado a src/types
-  "files": ["src/types/express.d.ts"]  // La ruta ahora es src/types/express.d.ts
+  "include": ["src/**/*", "test/**/*", "src/types/**/*"],  
+  "files": ["src/types/express.d.ts"]  
 }

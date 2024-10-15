@@ -1,7 +1,7 @@
 //* src/v1/roles/roles.controller.ts */
 import { Controller, Put, Param, Body, UseGuards } from '@nestjs/common';
 import { RolesService } from '@roles/roles.service';
-import { JwtAuthGuard } from '@auth/jwt-auth.guard'; // Asegúrate de tener este guard configurado
+import { JwtAuthGuard } from '@auth/jwt-auth.guard'; 
 import { RolesGuard } from '@roles/roles.guard'; // Guard para verificar roles específicos
 import { AsignarRolDto } from '@roles/dto/AsignarRolDto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';

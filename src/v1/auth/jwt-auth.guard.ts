@@ -7,7 +7,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (err || !user) {
       throw err || new UnauthorizedException('No autorizado');
     }
-    console.log('Usuario autenticado:', user); // Agrega este log
+    console.log('Usuario autenticado:', user); 
     return user; // 'user' debe contener 'usuarioId' y 'nombreUsuario'
   }
 }
