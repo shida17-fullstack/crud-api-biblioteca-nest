@@ -15,14 +15,9 @@ lerna-debug.log*
 # OS
 .DS_Store
 
-# Tests
-/coverage
-/.nyc_output
-/test
-
-
 # IDEs and editors
 /.idea
+/.vscode
 .project
 .classpath
 .c9/
@@ -30,19 +25,17 @@ lerna-debug.log*
 .settings/
 *.sublime-workspace
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# Tests
+/coverage
+/.nyc_output
+/test
 
 # dotenv environment variable files
 .env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+#.env.development.local
+#.env.test.local
+#.env.production.local
+#.env.local
 
 # temp directory
 .temp
@@ -56,3 +49,26 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Ignorar todo el contenido de src excepto los archivos que decides mantener
+/src
+!/src/app.module.ts
+!/src/main.ts
+!/src/v1
+!/src/v1/**/libro.entity.ts
+!/src/v1/**/libros.controller.ts
+!/src/v1/**/libros.module.ts
+!/src/v1/**/libros.service.ts
+!/src/v1/**/prestamo.entity.ts
+!/src/v1/**/prestamos.controller.ts
+!/src/v1/**/prestamos.module.ts
+!/src/v1/**/prestamos.service.ts
+!/src/v1/**/reserva.entity.ts
+!/src/v1/**/reservas.controller.ts
+!/src/v1/**/reservas.module.ts
+!/src/v1/**/reservas.service.ts
+!/src/v1/**/usuario.entity.ts
+!/src/v1/**/usuarios.controller.ts
+!/src/v1/**/usuarios.module.ts
+!/src/v1/**/usuarios.service.ts
+!/src/v1/**/v1.module.ts
