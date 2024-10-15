@@ -15,11 +15,11 @@ lerna-debug.log*
 # OS
 .DS_Store
 
-# Tests
+# Coverage y outputs de pruebas
 /coverage
 /.nyc_output
-/test
-
+# No excluyas la carpeta de test completa
+# /test 
 
 # IDEs and editors
 /.idea
