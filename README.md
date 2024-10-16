@@ -73,7 +73,8 @@ crud-api-biblioteca-nest
 
 ### Carpeta de Despliegue en Render con PostgreSQL
 
-**Ubicación:** [`swagger-test-deploy-postgres`](https://github.com/shida17-fullstack/crud-api-biblioteca-nest/tree/master/swagger-test-deploy-postgres`)
+**Ubicación:** [swagger-test-deploy-postgres](https://github.com/shida17-fullstack/crud-api-biblioteca-nest/tree/master/swagger-test-deploy-postgres)
+
 
 #### Archivos:
 
@@ -91,7 +92,9 @@ crud-api-biblioteca-nest
 
 ## Comandos aplicables en la rama **swagger-test-deployment**
 
-Estos comandos se pueden ejecutar dentro de la rama [`swagger-test-deployment`](https://github.com/shida17-fullstack/crud-api-biblioteca-nest/tree/swagger-test-deployment`), donde la API para la gestión de una biblioteca, desarrollada en Nest.js y conectada inicialmente a **MySQL** en desarrollo y luego desplegada en **Render** con **PostgreSQL**, está completamente documentada y lista para pruebas y despliegue con **Swagger**.
+## Comandos aplicables en la rama **swagger-test-deployment**
+
+Estos comandos se pueden ejecutar dentro de la rama [`swagger-test-deployment`](https://github.com/shida17-fullstack/crud-api-biblioteca-nest/tree/swagger-test-deployment), donde la API para la gestión de una biblioteca, desarrollada en Nest.js y conectada inicialmente a **MySQL** en desarrollo y luego desplegada en **Render** con **PostgreSQL**, está completamente documentada y lista para pruebas y despliegue con **Swagger**.
 
 Esta **API CRUD** automatiza los procesos clave de una biblioteca, como la autenticación de usuarios, la gestión del catálogo de libros, la creación y seguimiento de préstamos y reservas, y la asignación de roles. Gracias a este sistema, se garantiza una gestión más eficiente y segura de las operaciones diarias de la biblioteca.
 
