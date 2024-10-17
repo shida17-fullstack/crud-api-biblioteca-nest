@@ -90,7 +90,45 @@ crud-api-biblioteca-nest
 
 - **main.updated.ts:** Versión actualizada de la documentacion del codigo de main con mejoras en la inicialización de la API y la configuración de Swagger, proporcionando una interfaz visual para interactuar con los endpoints de la API.
 
-## Comandos aplicables en la rama **swagger-test-deployment**
+## Glosario de Códigos
+
+### Módulo y Decoradores
+- `@module`: Define un módulo en JavaScript o TypeScript.
+- `@description`: Proporciona una descripción del módulo, clase o función.
+- `@version`: Indica la versión del módulo o aplicación.
+- `@since`: Especifica la fecha de creación o modificación.
+- `@author`: Define el autor del módulo o código.
+- `@license`: Especifica el tipo de licencia del código.
+
+### Funciones y Tipos de Datos
+- `@function`: Denota una función, su descripción y tipo de retorno.
+- `@returns`: Indica el valor que devuelve una función.
+- `@throws`: Describe las excepciones que una función puede lanzar.
+- `@constant`: Define una constante y su descripción.
+- `@type`: Especifica el tipo de una variable o propiedad.
+
+### Controladores y Servicios
+- `LibrosController`: Controlador que gestiona las operaciones relacionadas con libros.
+- `LibrosService`: Servicio que proporciona la lógica de negocio para la gestión de libros.
+- `CreateLibroDTO`: Data Transfer Object para la creación de un libro.
+- `UpdateLibroDTO`: Data Transfer Object para la actualización de un libro.
+- `Libro`: Entidad que representa un libro en la aplicación.
+- `NotFoundException`: Excepción lanzada cuando un recurso no se encuentra.
+- `JwtPayload`: Interfaz que define la estructura del payload de un JWT.
+
+### Testing
+- `@class`: Indica que el bloque de código representa una clase.
+- `describe`: Método de Jest que agrupa pruebas relacionadas.
+- `it`: Método de Jest que define una prueba específica.
+- `beforeEach`: Función que se ejecuta antes de cada prueba en un bloque `describe`.
+- `jest.fn()`: Método de Jest que crea una función simulada para pruebas.
+
+### Otros
+- `logger`: Instancia de Logger utilizada para registrar mensajes en la consola.
+- `process.env`: Objeto que proporciona acceso a las variables de entorno.
+- `async/await`: Sintaxis para trabajar con promesas de manera más sencilla.
+
+
 
 ## Comandos aplicables en la rama **swagger-test-deployment**
 
